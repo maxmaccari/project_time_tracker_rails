@@ -31,10 +31,13 @@ class Project < ApplicationRecord
   # Methods
   def hours
     minutes = amount_works.inject(0) {|sum, aw| sum + aw.minutes }
-    amount_works.inject(0) {|sum, aw| sum + aw.hours } + (minutes / 60)
+    minutes += projects.inject(0) { |sum, proj| sum + proj.minutes }
+    amount_works.inject(0) {|sum, aw| sum + aw.hours } + (minutes / 60) +
+      projects.inject(0) { |sum, proj| sum + proj.hours }
   end
 
   def minutes
-    amount_works.inject(0) {|sum, aw| sum + aw.minutes } % 60
+    (amount_works.inject(0) {|sum, aw| sum + aw.minutes } +
+      projects.inject(0) {|sum, proj| sum + proj.minutes }) % 60
   end
 end

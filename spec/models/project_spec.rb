@@ -65,6 +65,14 @@ RSpec.describe Project, type: :model do
 
       expect(subject.hours).to eq(8)
     end
+
+    it 'must return the total of hours of related project hours' do
+      project = create(:project, parent: subject)
+      create(:amount_work, hours: 2, minutes: 30, project: project)
+      create(:amount_work, minutes: 30, project: project)
+
+      expect(subject.hours).to eq(9)
+    end
   end
 
   describe 'minutes' do
@@ -88,6 +96,14 @@ RSpec.describe Project, type: :model do
       create(:amount_work, minutes: 40, project: subject)
 
       expect(subject.minutes).to eq(30)
+    end
+
+    it 'must return the total of minutes of related project minutes' do
+      project = create(:project, parent: subject)
+      create(:amount_work, minutes: 2, project: project)
+      create(:amount_work, minutes: 3, project: project)
+
+      expect(subject.minutes).to eq(55)
     end
   end
 end
