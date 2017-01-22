@@ -14,11 +14,18 @@ class TimeWork < ApplicationRecord
   validates_numericality_of :final_minute, greater_than_or_equal_to: 0,
     less_than: 60, only_integer: true, allow_nil: true
 
-  validate :final_hour_cannot_be_before_initial_hour
+  validate :final_time_cannot_be_before_initial_time
 
-  def final_hour_cannot_be_before_initial_hour
-    if initial_hour.present? && final_hour.present? && final_hour < initial_hour
-      errors.add(:final_hour, "cannot be before initial hour")
+  def final_time_cannot_be_before_initial_time
+    if initial_hour.present? && final_hour.present?
+      if final_hour < initial_hour
+        errors.add(:final_hour, "cannot be before initial hour")
+      end
+
+      if initial_minute.present? && final_minute.present? &&
+        initial_hour == final_hour && final_minute < initial_minute
+        errors.add(:final_minute, "cannot be before initial minute")
+      end
     end
   end
 

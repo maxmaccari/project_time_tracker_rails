@@ -61,8 +61,17 @@ RSpec.describe TimeWork, type: :model do
       it 'must have to be zero by default even it is set to nil' do
         subject.initial_minute = nil
         subject.save
+
         expect(subject.initial_minute).to eq(0)
       end
+    end
+
+    describe 'final_minute' do
+      subject { create(:time_work, initial_minute: 30, final_hour: 0) }
+
+      it { should allow_value(30).for(:final_minute) }
+      it { should allow_value(40).for(:final_minute) }
+      it { should_not allow_value(29).for(:final_minute) }
     end
   end
 
