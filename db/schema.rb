@@ -46,13 +46,15 @@ ActiveRecord::Schema.define(version: 20170122181751) do
   end
 
   create_table "time_works", force: :cascade do |t|
-    t.date     "date",         null: false
+    t.date     "date",                       null: false
     t.text     "description"
-    t.time     "initial_time", null: false
-    t.time     "final_time"
-    t.integer  "project_id",   null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "initial_hour",               null: false
+    t.integer  "initial_minute", default: 0, null: false
+    t.integer  "final_hour"
+    t.integer  "final_minute"
+    t.integer  "project_id",                 null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["date"], name: "index_time_works_on_date", using: :btree
     t.index ["project_id"], name: "index_time_works_on_project_id", using: :btree
   end

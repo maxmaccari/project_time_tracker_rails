@@ -4,8 +4,11 @@ class CreateTimeWorks < ActiveRecord::Migration[5.0]
       t.date :date, null: false, index: true
       t.text :description
 
-      t.time :initial_time, null: false
-      t.time :final_time
+      t.integer :initial_hour, null: false
+      t.integer :initial_minute, null: false, default: 0
+
+      t.integer :final_hour
+      t.integer :final_minute
 
       t.references :project, null: false, foreign_key: true, index: true
 
