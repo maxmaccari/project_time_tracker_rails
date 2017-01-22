@@ -20,7 +20,7 @@ class Project < ApplicationRecord
 
   # Associations
   belongs_to :parent, class_name: 'Project', optional: true
-  has_many :projects, foreign_key: :parent_id
+  has_many :subprojects, class_name: 'Project', foreign_key: :parent_id
   has_many :amount_works
 
   # Overrides
@@ -31,13 +31,13 @@ class Project < ApplicationRecord
   # Methods
   def hours
     minutes = amount_works.inject(0) {|sum, aw| sum + aw.minutes }
-    minutes += projects.inject(0) { |sum, proj| sum + proj.minutes }
+    minutes += subprojects.inject(0) { |sum, proj| sum + proj.minutes }
     amount_works.inject(0) {|sum, aw| sum + aw.hours } + (minutes / 60) +
-      projects.inject(0) { |sum, proj| sum + proj.hours }
+      subprojects.inject(0) { |sum, proj| sum + proj.hours }
   end
 
   def minutes
     (amount_works.inject(0) {|sum, aw| sum + aw.minutes } +
-      projects.inject(0) {|sum, proj| sum + proj.minutes }) % 60
+      subprojects.inject(0) {|sum, proj| sum + proj.minutes }) % 60
   end
 end

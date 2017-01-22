@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Project, type: :model do
   describe 'validations' do
     it { should validate_presence_of :title }
+
     it { should validate_numericality_of(:estimated_hours).
         is_greater_than_or_equal_to(0).
         only_integer.
@@ -27,7 +28,7 @@ RSpec.describe Project, type: :model do
 
   describe 'associations' do
     it { should belong_to :parent }
-    it { should have_many :projects }
+    it { should have_many :subprojects }
     it { should have_many :amount_works }
   end
 

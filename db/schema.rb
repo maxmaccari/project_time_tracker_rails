@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170122052005) do
+ActiveRecord::Schema.define(version: 20170122181751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,11 +30,13 @@ ActiveRecord::Schema.define(version: 20170122052005) do
   create_table "projects", force: :cascade do |t|
     t.string   "title",                          null: false
     t.text     "description"
-    t.integer  "estimated_hours"
     t.date     "initial_date"
     t.date     "final_date"
-    t.boolean  "active",          default: true, null: false
+    t.integer  "estimated_hours"
+    t.decimal  "hour_value"
+    t.decimal  "project_value"
     t.integer  "parent_id"
+    t.boolean  "active",          default: true, null: false
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.index ["active"], name: "index_projects_on_active", using: :btree
@@ -43,6 +45,19 @@ ActiveRecord::Schema.define(version: 20170122052005) do
     t.index ["title"], name: "index_projects_on_title", using: :btree
   end
 
+  create_table "time_works", force: :cascade do |t|
+    t.date     "date",         null: false
+    t.text     "description"
+    t.time     "initial_time", null: false
+    t.time     "final_time"
+    t.integer  "project_id",   null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["date"], name: "index_time_works_on_date", using: :btree
+    t.index ["project_id"], name: "index_time_works_on_project_id", using: :btree
+  end
+
   add_foreign_key "amount_works", "projects"
   add_foreign_key "projects", "projects", column: "parent_id"
+  add_foreign_key "time_works", "projects"
 end
