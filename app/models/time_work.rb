@@ -25,6 +25,23 @@ class TimeWork < ApplicationRecord
   # Associations
   belongs_to :project
 
+  # Callbacks
+  before_save :initial_and_final_minutes_makers
+
+  def initial_and_final_minutes_makers
+    if self.final_minute.blank?
+      self.final_minute = 0
+    end
+
+    if self.initial_minute.blank?
+      self.initial_minute = 0
+    end
+
+    if self.final_hour.blank?
+      self.final_minute = nil
+    end
+  end
+
   # Methods
   def hours
     return (final_time.hour - initial_time.hour) if final_time.present?

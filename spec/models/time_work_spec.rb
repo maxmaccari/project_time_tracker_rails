@@ -35,6 +35,34 @@ RSpec.describe TimeWork, type: :model do
       it { should allow_value(3).for(:final_hour) }
       it { should allow_value(4).for(:final_hour) }
       it { should_not allow_value(2).for(:final_hour) }
+
+      it 'set final_minute to nil if final_hour is nil' do
+        subject.final_minute = 10
+        subject.save
+
+        expect(subject.final_minute).to be_nil
+      end
+
+      it 'set final_minute to 0 if final_hour is not nil' do
+        subject.final_hour = 10
+        subject.save
+
+        expect(subject.final_minute).to eq(0)
+      end
+    end
+
+    describe 'initial_minute' do
+      subject { create(:time_work) }
+
+      it 'must have to be zero by default' do
+        expect(subject.initial_minute).to eq(0)
+      end
+
+      it 'must have to be zero by default even it is set to nil' do
+        subject.initial_minute = nil
+        subject.save
+        expect(subject.initial_minute).to eq(0)
+      end
     end
   end
 
