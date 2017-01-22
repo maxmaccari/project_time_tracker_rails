@@ -21,9 +21,20 @@ class Project < ApplicationRecord
   # Associations
   belongs_to :parent, class_name: 'Project', optional: true
   has_many :projects, foreign_key: :parent_id
+  has_many :amount_works
 
   # Overrides
   def to_s
     title
+  end
+
+  # Methods
+  def hours
+    minutes = amount_works.inject(0) {|sum, aw| sum + aw.minutes }
+    amount_works.inject(0) {|sum, aw| sum + aw.hours } + (minutes / 60)
+  end
+
+  def minutes
+    amount_works.inject(0) {|sum, aw| sum + aw.minutes } % 60
   end
 end
