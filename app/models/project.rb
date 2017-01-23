@@ -19,7 +19,7 @@ class Project < ApplicationRecord
   # Associations
   belongs_to :parent, class_name: 'Project', optional: true
   has_many :subprojects, class_name: 'Project', foreign_key: :parent_id
-  has_many :works
+  has_many :works, dependent: :destroy
 
   # Overrides
   def to_s
