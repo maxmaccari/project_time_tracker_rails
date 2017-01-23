@@ -13,8 +13,8 @@
       <tr>
         <td><%= link_to project, project %></td>
         <td><%= project.description %></td>
-        <td><%= project.initial_date %></td>
-        <td><%= project.final_date %></td>
+        <td><%= l project.initial_date if project.initial_date %></td>
+        <td><%= l project.final_date if project.final_date %></td>
       </tr>
     <% end %>
   </tbody>

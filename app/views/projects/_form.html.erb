@@ -5,8 +5,14 @@
     <%= f.input :title %>
     <%= f.input :description %>
     <%= f.association :parent %>
-    <%= f.input :initial_date, as: :string, input_html: {class: 'datepicker'} %>
-    <%= f.input :final_date, as: :string, input_html: {class: 'datepicker'} %>
+
+    <%= f.input :initial_date, as: :string, input_html: {class: 'datepicker',
+      value: @project.initial_date ?
+      @project.initial_date.strftime("%d/%m/%Y") : '' } %>
+    <%= f.input :final_date, as: :string, input_html: {class: 'datepicker',
+      value: @project.final_date ?
+      @project.final_date.strftime("%d/%m/%Y") : '' } %>
+
     <%= f.input :active %>
   </div>
 

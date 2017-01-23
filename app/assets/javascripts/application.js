@@ -20,5 +20,8 @@
 //= require_tree .
 
 document.addEventListener("turbolinks:load", function() {
-  $('.datepicker').datepicker();
+  $('.datepicker').datepicker({
+    format: "dd/mm/yyyy",
+    language: "pt-BR"
+  });
 })

@@ -3,15 +3,20 @@
 <div class="panel panel-default">
   <div class="panel-heading"><%= Project.human_attribute_name(:description) %></div>
   <div class="panel-body">
-    <%= project.description %><br>
-    <% if @project.initial_date.present? %>
-      <span class="initial-date"><%= project.initial_date %></span>
+    <%= project.description %>
+    <% if project.initial_date.present? %>
+      <div class="initial-date">
+      <strong><%= Project.human_attribute_name(:initial_date) %>:</strong> <%= l project.initial_date %></div>
+    <% end %>
+    <% if project.final_date.present? %>
+      <div class="final-date">
+      <strong><%= Project.human_attribute_name(:final_date) %>:</strong> <%= l project.final_date %></div>
     <% end %>
     <% if project.parent.present? %>
-    <span class="parent">
+    <div class="parent">
       <strong><%= Project.human_attribute_name(:parent) %>:</strong>
       <%= link_to project.parent, project.parent if @project.parent %>
-    </span><br>
+    </div>
     <% end %>
   </div>
 </div>
