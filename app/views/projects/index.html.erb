@@ -1,5 +1,2 @@
 <h1><%= Project.model_name.human(count: 2) %></h1>
 <%= render 'projects', projects: @projects %>
-<br>
-
-<%= link_to t('actions.new', model: Project.model_name.human), new_project_path %>
