@@ -1,6 +1,6 @@
-class TimeWork < ApplicationRecord
+class TimeWork < Work
   # Validations
-  validates_presence_of :date, :project, :initial_hour
+  validates_presence_of :initial_hour
 
   validates_numericality_of :initial_hour, greater_than_or_equal_to: 0,
     less_than: 24, only_integer: true
@@ -15,9 +15,6 @@ class TimeWork < ApplicationRecord
     less_than: 60, only_integer: true, allow_nil: true
 
   validate :final_time_cannot_be_before_initial_time
-
-  # Associations
-  belongs_to :project
 
   # Callbacks
   before_save :initial_and_final_minutes_makers

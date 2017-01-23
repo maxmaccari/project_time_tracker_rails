@@ -1,8 +1,6 @@
 class Project < ApplicationRecord
   # Validations
   validates_presence_of :title
-  validates_numericality_of :estimated_hours, greater_than_or_equal_to: 0,
-    only_integer: true, allow_nil: true
   validate :final_date_cannot_be_before_initial_date,
     :initial_date_cannot_be_after_final_date
 
@@ -21,7 +19,7 @@ class Project < ApplicationRecord
   # Associations
   belongs_to :parent, class_name: 'Project', optional: true
   has_many :subprojects, class_name: 'Project', foreign_key: :parent_id
-  has_many :amount_works
+  has_many :works
 
   # Overrides
   def to_s
@@ -30,14 +28,14 @@ class Project < ApplicationRecord
 
   # Methods
   def hours
-    minutes = amount_works.inject(0) {|sum, aw| sum + aw.minutes }
+    minutes = works.inject(0) {|sum, aw| sum + aw.minutes }
     minutes += subprojects.inject(0) { |sum, proj| sum + proj.minutes }
-    amount_works.inject(0) {|sum, aw| sum + aw.hours } + (minutes / 60) +
+    works.inject(0) {|sum, aw| sum + aw.hours } + (minutes / 60) +
       subprojects.inject(0) { |sum, proj| sum + proj.hours }
   end
 
   def minutes
-    (amount_works.inject(0) {|sum, aw| sum + aw.minutes } +
+    (works.inject(0) {|sum, aw| sum + aw.minutes } +
       subprojects.inject(0) {|sum, proj| sum + proj.minutes }) % 60
   end
 end
