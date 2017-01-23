@@ -21,6 +21,10 @@ class Project < ApplicationRecord
   has_many :subprojects, class_name: 'Project', foreign_key: :parent_id
   has_many :works, dependent: :destroy
 
+  # Scopes
+  scope :root, -> { where(parent: nil) }
+  scope :active, -> { where(active: true) }
+
   # Overrides
   def to_s
     title

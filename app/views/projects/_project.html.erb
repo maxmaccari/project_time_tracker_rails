@@ -1,0 +1,18 @@
+<h1><%= project.title + (project.active? ? '' : " (Inactive)") %></h1>
+
+<div class="panel panel-default">
+  <div class="panel-heading">Description</div>
+  <div class="panel-body">
+    <%= project.description %><br>
+    <% if @project.initial_date.present? %>
+      <span class="initial-date"><%= project.initial_date %></span>
+    <% end %>
+    <% if project.parent.present? %>
+    <span class="parent">
+      <strong>Parent:</strong>
+      <%= link_to project.parent, project.parent if @project.parent %>
+    </span><br>
+    <% end %>
+  </div>
+</div>
+<p></p>

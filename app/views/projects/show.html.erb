@@ -1,23 +1,12 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @project.title %></h1>
+<%= render 'project', project: @project %>
 
-<p><%= @project.description %></p>
-
-<p>
-  <strong>Parent:</strong>
-  <%= link_to @project.parent, @project.parent if @project.parent %>
-</p>
-
-<p><%= @project.initial_date %> - <%= @project.final_date %></p>
-
-<p>
-  <strong>Active?</strong>
-  <%= @project.active? ? 'Yes' : 'No' %>
-</p>
-
-<h1>Sub-projects</h1>
-<%= render 'projects', projects: @project.subprojects %>
+<% if @project.subprojects.any? %>
+  <h1>Sub-projects</h1>
+  <%= render 'projects', projects: @project.subprojects %>
+<% end %>
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Destroy', @project, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Back', projects_path %>
