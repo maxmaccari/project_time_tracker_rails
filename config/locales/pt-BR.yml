@@ -9,10 +9,11 @@ pt-BR:
       project:
         title: Título
         description: Descrição
-        parent: Projeto pai
+        parent: Projeto
         initial_date: Data de Início
         final_date: Data Final
         active: Ativo
+        subprojects: Sub-projetos
   actions:
     new: Novo %{model}
     show: Ver %{model}
@@ -21,3 +22,9 @@ pt-BR:
     destroy: Excluir
     destroy_prompt: 'Tem certeza que deseja excluir %{model}? A exclusão é irreversível!'
     back: 'Voltar'
+  notifications:
+    create: '%{model} criado com sucesso.'
+    update: '%{model} atualizado com sucesso.'
+    destroy: '%{model} excluído com sucesso.'
+    empty: 'Você não tem %{model} cadastrados no momento. Clique em %{link} para
+    cadastrar.'

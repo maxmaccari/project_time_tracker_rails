@@ -3,7 +3,7 @@
 <%= render 'project', project: @project %>
 
 <% if @project.subprojects.any? %>
-  <h1>Sub-projects</h1>
+  <h1><%= Project.human_attribute_name(:subprojects) %></h1>
   <%= render 'projects', projects: @project.subprojects %>
 <% end %>
 
