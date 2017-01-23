@@ -5,8 +5,8 @@
     <%= f.input :title %>
     <%= f.input :description %>
     <%= f.association :parent %>
-    <%= f.input :initial_date %>
-    <%= f.input :final_date %>
+    <%= f.input :initial_date, as: :string, input_html: {class: 'datepicker'} %>
+    <%= f.input :final_date, as: :string, input_html: {class: 'datepicker'} %>
     <%= f.input :active %>
   </div>
 

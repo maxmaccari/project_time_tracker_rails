@@ -6,7 +6,7 @@
 
 <p>
   <strong>Parent:</strong>
-  <%= link_to @project.parent, @project.parent %>
+  <%= link_to @project.parent, @project.parent if @project.parent %>
 </p>
 
 <p><%= @project.initial_date %> - <%= @project.final_date %></p>

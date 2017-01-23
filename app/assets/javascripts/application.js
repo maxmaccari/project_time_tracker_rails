@@ -13,4 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap-sprockets
+//= require jquery.inputmask.bundle
+//= require bootstrap-datepicker
+//= require bootstrap-datepicker.pt-BR
 //= require_tree .
+
+document.addEventListener("turbolinks:load", function() {
+  $('.datepicker').datepicker();
+})
