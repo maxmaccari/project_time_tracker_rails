@@ -1,0 +1,23 @@
+---
+pt-BR:
+  activerecord:
+    models:
+      project:
+        one: Projeto
+        other: Projetos
+    attributes:
+      project:
+        title: Título
+        description: Descrição
+        parent: Projeto pai
+        initial_date: Data de Início
+        final_date: Data Final
+        active: Ativo
+  actions:
+    new: Novo %{model}
+    show: Ver %{model}
+    edit: Editar
+    editing: 'Editando %{model}'
+    destroy: Excluir
+    destroy_prompt: 'Tem certeza que deseja excluir %{model}? A exclusão é irreversível!'
+    back: 'Voltar'

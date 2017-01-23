@@ -1,5 +1,5 @@
-<h1>Editing Project</h1>
+<h1><%= t('actions.editing', model: @project) %></h1>
 
 <%= render 'form', project: @project %>
 
-<%= link_to 'Back', @project %>
+<%= link_to t('actions.back'), @project %>
