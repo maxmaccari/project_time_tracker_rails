@@ -22,6 +22,7 @@
 document.addEventListener("turbolinks:load", function() {
   $('.datepicker').datepicker({
     format: "dd/mm/yyyy",
-    language: "pt-BR"
+    language: "pt-BR",
+    todayHighlight: true
   });
 })
