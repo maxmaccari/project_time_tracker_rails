@@ -25,6 +25,10 @@ class Project < ApplicationRecord
   scope :root, -> { where(parent: nil) }
   scope :active, -> { where(active: true) }
 
+  # Friendly
+  extend FriendlyId
+  friendly_id :title, use: :slugged
+
   # Overrides
   def to_s
     title

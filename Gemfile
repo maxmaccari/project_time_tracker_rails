@@ -15,6 +15,7 @@ gem 'simple_form'
 gem 'bootstrap-sass', '~> 3.3.6'
 
 gem 'devise'
+gem 'friendly_id', '~> 5.1.0' # Note: You MUST use 5.0.0 or greater for Rails 4.0+
 
 group :development, :test do
   gem 'byebug', platform: :mri
