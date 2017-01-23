@@ -1,0 +1,24 @@
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="panel panel-default">
+      <div class="panel-heading"><%= t('devise.passwords.new.title') %></div>
+      <div class="panel-body">
+        <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+          <%= f.error_notification %>
+
+          <p><%= t('devise.passwords.new.instructions') %></p>
+
+          <div class="form-inputs">
+            <%= f.input :email, required: true, autofocus: true %>
+          </div>
+
+          <div class="form-actions">
+            <%= f.button :submit, t('devise.passwords.new.submit'), class: 'btn-primary btn-block' %>
+          </div>
+        <% end %>
+
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>

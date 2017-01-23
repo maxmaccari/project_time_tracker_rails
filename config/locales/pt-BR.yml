@@ -30,3 +30,41 @@ pt-BR:
     destroy: '%{model} excluído com sucesso.'
     empty: 'Você não tem %{model} cadastrados no momento. Clique em %{link} para
     cadastrar.'
+  devise:
+    login: Entrar
+    logout: Sair
+    sessions:
+      new:
+        title: Login
+        submit: Entrar
+        remember_me: Permanecer logado
+    passwords:
+      new:
+        title: Não consigo acessar
+        instructions: Informe seu email. Te enviaremos instruções para você recuperar seu acesso.
+        submit: Me envie as instruções
+      edit:
+        title: Altere a sua senha
+        submit: Alterar minha senha
+        new_password: Nova senha
+        new_password_hint: "%{minimum} caracteres no mínimo"
+        confirm_new_password: Confirme sua nova senha
+    shared:
+      forgot_password: Não consegue acessar?
+      login: Realizar login
+    mailer:
+      password_instructions:
+        hello: Olá %{name}!
+        reset_password_instructions: Você solicitou um link para alterar sua senha? Você pode fazer isso acessando o link abaixo.
+        link: 'Mudar minha senha'
+        ignore: Caso não foi você quem solicitou a alteração da sua senha, por favor, ignore este email.
+        your_password_wont_be_changed: Sua senha não será alterada até você acessar o link acima e criar uma nova senha.
+      password_notification:
+        hello: Olá %{name}!
+        notification: Estamos entrando em contato para notificar que sua senha foi aterada.
+  simple_form:
+    error_notification:
+      consumer: "Foram encontrados alguns erros em seu formulário. Verifique por favor:"
+    labels:
+      defaults:
+        remember_me: Permanecer Logado
