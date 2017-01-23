@@ -3,7 +3,7 @@
 
   <div class="form-inputs">
     <%= f.input :type,
-      collection: { 'Quantidade de Tempo': 'AmountRecord', 'Intervalo de Tempo': 'TimeRecord' },
+      collection: Record.types.map { |type| [Record.human_type_value(type), type] },
       as: :radio_buttons %>
 
     <%= f.input :date %>

@@ -17,7 +17,7 @@
         <td><%= record.description %></td>
         <td><%= record.hours %></td>
         <td><%= record.minutes %></td>
-        <td><%= record.type %></td>
+        <td><%= record.human_type_value %></td>
         <td><%= link_to t('actions.edit'), project_record_path(@project, record) %></td>
         <td><%= link_to t('actions.destroy'), project_record_path(@project, record), method: :delete, data: { confirm: t('actions.destroy_prompt', model: @record) } %></td>
       </tr>

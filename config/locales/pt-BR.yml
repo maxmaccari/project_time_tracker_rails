@@ -22,6 +22,9 @@ pt-BR:
         records: Registros
       record:
         type: Tipo
+        type_values:
+          TimeRecord: Intervalo de Tempo
+          AmountRecord: Quantidade de Tempo
         date: Data
         description: Descrição
         initial_hour: Hora de Início
