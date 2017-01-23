@@ -28,6 +28,10 @@
           <ul class="nav navbar-nav navbar-right">
             <li><%= link_to Project.model_name.human(count: 2), projects_path %></li>
             <li><%= link_to t('actions.new', model: Project.model_name.human), new_project_path %></li>
+            <li>
+              <%= link_to t('devise.logout'), destroy_user_session_path,
+                method: 'delete' %>
+            </li>
           </ul>
           <% end %>
         </div><!-- /.navbar-collapse -->
