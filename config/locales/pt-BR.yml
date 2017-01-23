@@ -1,5 +1,7 @@
 ---
 pt-BR:
+  app:
+    name: Tracker de Projetos
   activerecord:
     models:
       project:
