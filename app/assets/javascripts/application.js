@@ -17,7 +17,7 @@
 //= require jquery.inputmask.bundle
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker.pt-BR
-//= require_tree .
+//= require register
 
 document.addEventListener("turbolinks:load", function() {
   $('.datepicker').datepicker({

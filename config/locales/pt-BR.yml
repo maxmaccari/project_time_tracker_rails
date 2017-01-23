@@ -20,6 +20,17 @@ pt-BR:
         active: Ativo
         subprojects: Sub-projetos
         records: Registros
+      record:
+        type: Tipo
+        date: Data
+        description: Descrição
+        initial_hour: Hora de Início
+        initial_minute: Minuto de Início
+        final_hour: Hora Final
+        final_minute: Minute Final
+        hours: Horas
+        minutes: Minutos
+        project: Projeto
   actions:
     new: Novo %{model}
     show: Ver %{model}

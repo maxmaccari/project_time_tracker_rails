@@ -1,52 +1,5 @@
-<p>
-  <strong>Type:</strong>
-  <%= @record.type %>
-</p>
+<h1><%= t('actions.editing', model: @record) %></h1>
 
-<p>
-  <strong>Date:</strong>
-  <%= @record.date %>
-</p>
+<%= render 'form', record: @record %>
 
-<p>
-  <strong>Description:</strong>
-  <%= @record.description %>
-</p>
-
-<p>
-  <strong>Initial hour:</strong>
-  <%= @record.initial_hour %>
-</p>
-
-<p>
-  <strong>Initial minute:</strong>
-  <%= @record.initial_minute %>
-</p>
-
-<p>
-  <strong>Final hour:</strong>
-  <%= @record.final_hour %>
-</p>
-
-<p>
-  <strong>Final minute:</strong>
-  <%= @record.final_minute %>
-</p>
-
-<p>
-  <strong>Hours:</strong>
-  <%= @record.hours %>
-</p>
-
-<p>
-  <strong>Minutes:</strong>
-  <%= @record.minutes %>
-</p>
-
-<p>
-  <strong>Project:</strong>
-  <%= @record.project %>
-</p>
-
-<%= link_to 'Edit', edit_project_record_path(@project, @record) %> |
-<%= link_to 'Back', @project %>
+<%= link_to t('actions.back'), @project %>

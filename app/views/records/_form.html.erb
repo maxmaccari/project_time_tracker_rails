@@ -2,16 +2,21 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :type %>
+    <%= f.input :type,
+      collection: { 'Quantidade de Tempo': 'AmountRecord', 'Intervalo de Tempo': 'TimeRecord' },
+      as: :radio_buttons %>
+
     <%= f.input :date %>
     <%= f.input :description %>
-    <%= f.input :initial_hour %>
-    <%= f.input :initial_minute %>
-    <%= f.input :final_hour %>
-    <%= f.input :final_minute %>
-    <%= f.input :hours %>
-    <%= f.input :minutes %>
-    <%= f.association :project %>
+
+    <%= f.input :initial_hour, wrapper_html: {class: 'time_record_field'} %>
+    <%= f.input :initial_minute, wrapper_html: {class: 'time_record_field'} %>
+    <%= f.input :final_hour, wrapper_html: {class: 'time_record_field'} %>
+    <%= f.input :final_minute, wrapper_html: {class: 'time_record_field'} %>
+
+    <%= f.input :hours, wrapper_html: {class: 'amount_record_field'} %>
+    <%= f.input :minutes, wrapper_html: {class: 'amount_record_field'} %>
+
   </div>
 
   <div class="form-actions">

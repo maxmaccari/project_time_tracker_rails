@@ -1,6 +1,6 @@
 class RecordsController < ApplicationController
   before_action :set_project
-  before_action :set_record, only: [:show, :edit, :update, :destroy]
+  before_action :set_record, only: [:show, :update, :destroy]
 
   # GET /records/1
   def show
@@ -11,16 +11,12 @@ class RecordsController < ApplicationController
     @record = @project.records.new
   end
 
-  # GET /records/1/edit
-  def edit
-  end
-
   # POST /records
   def create
     @record = @project.records.new(record_params)
 
     if @record.save
-      redirect_to @record, notice: t('notifications.create', model: Record.model_name.human)
+      redirect_to @project, notice: t('notifications.create', model: Record.model_name.human)
     else
       render :new
     end
@@ -29,7 +25,7 @@ class RecordsController < ApplicationController
   # PATCH/PUT /records/1
   def update
       if @record.update(record_params)
-        redirect_to @record, notice: t('notifications.update', model: Update.model_name.human)
+        redirect_to @project, notice: t('notifications.update', model: Record.model_name.human)
       else
         render :edit
       end
@@ -38,9 +34,7 @@ class RecordsController < ApplicationController
   # DELETE /records/1
   def destroy
     @record.destroy
-    respond_to do |format|
-      redirect_to records_url, notice: t('notifications.destroy', model: Record.model_name.human)
-    end
+    redirect_to @project, notice: t('notifications.destroy', model: Record.model_name.human)
   end
 
   private
@@ -55,6 +49,8 @@ class RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      params.require(:record).permit(:type, :date, :description, :initial_hour, :initial_minute, :final_hour, :final_minute, :hours, :minutes, :project_id)
+      return params.require(:amount_record).permit(:type, :date, :description, :hours, :minutes) if params[:amount_record].present?
+      return params.require(:time_record).permit(:type, :date, :description, :initial_hour, :initial_minute, :final_hour, :final_minute) if params[:time_record].present?
+      params.require(:record).permit(:type, :date, :description, :initial_hour, :initial_minute, :final_hour, :final_minute, :hours, :minutes)
     end
 end
