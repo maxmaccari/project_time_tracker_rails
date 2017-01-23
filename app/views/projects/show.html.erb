@@ -1,34 +1,23 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @project.title %>
-</p>
+<h1><%= @project.title %></h1>
 
-<p>
-  <strong>Description:</strong>
-  <%= @project.description %>
-</p>
+<p><%= @project.description %></p>
 
 <p>
   <strong>Parent:</strong>
-  <%= @project.parent %>
+  <%= link_to @project.parent, @project.parent %>
 </p>
 
-<p>
-  <strong>Initial date:</strong>
-  <%= @project.initial_date %>
-</p>
+<p><%= @project.initial_date %> - <%= @project.final_date %></p>
 
 <p>
-  <strong>Final date:</strong>
-  <%= @project.final_date %>
+  <strong>Active?</strong>
+  <%= @project.active? ? 'Yes' : 'No' %>
 </p>
 
-<p>
-  <strong>Active:</strong>
-  <%= @project.active %>
-</p>
+<h1>Sub-projects</h1>
+<%= render 'projects', projects: @project.subprojects %>
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>
