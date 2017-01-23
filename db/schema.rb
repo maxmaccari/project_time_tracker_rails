@@ -44,6 +44,24 @@ ActiveRecord::Schema.define(version: 20170123193834) do
     t.index ["title"], name: "index_projects_on_title", using: :btree
   end
 
+  create_table "records", force: :cascade do |t|
+    t.string   "type",                       null: false
+    t.date     "date",                       null: false
+    t.text     "description"
+    t.integer  "initial_hour",   default: 0, null: false
+    t.integer  "initial_minute", default: 0, null: false
+    t.integer  "final_hour"
+    t.integer  "final_minute"
+    t.integer  "hours",          default: 0, null: false
+    t.integer  "minutes",        default: 0, null: false
+    t.integer  "project_id",                 null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["date"], name: "index_records_on_date", using: :btree
+    t.index ["project_id"], name: "index_records_on_project_id", using: :btree
+    t.index ["type"], name: "index_records_on_type", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -61,24 +79,6 @@ ActiveRecord::Schema.define(version: 20170123193834) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  create_table "works", force: :cascade do |t|
-    t.string   "type",                       null: false
-    t.date     "date",                       null: false
-    t.text     "description"
-    t.integer  "initial_hour",   default: 0, null: false
-    t.integer  "initial_minute", default: 0, null: false
-    t.integer  "final_hour"
-    t.integer  "final_minute"
-    t.integer  "hours",          default: 0, null: false
-    t.integer  "minutes",        default: 0, null: false
-    t.integer  "project_id",                 null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.index ["date"], name: "index_works_on_date", using: :btree
-    t.index ["project_id"], name: "index_works_on_project_id", using: :btree
-    t.index ["type"], name: "index_works_on_type", using: :btree
-  end
-
   add_foreign_key "projects", "projects", column: "parent_id"
-  add_foreign_key "works", "projects"
+  add_foreign_key "records", "projects"
 end

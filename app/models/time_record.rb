@@ -1,4 +1,4 @@
-class TimeWork < Work
+class TimeRecord < Record
   # Validations
   validates_presence_of :initial_hour
 

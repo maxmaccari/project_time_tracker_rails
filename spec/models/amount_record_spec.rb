@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AmountWork, type: :model do
+RSpec.describe AmountRecord, type: :model do
   describe 'validations' do
     it { should validate_presence_of :date }
     it { should validate_presence_of :project }
@@ -23,7 +23,7 @@ RSpec.describe AmountWork, type: :model do
   end
 
   describe 'to_s' do
-    subject { create(:amount_work, hours: 3, minutes: 30) }
+    subject { create(:amount_record, hours: 3, minutes: 30) }
 
     it 'must return "#description (#hours:#minutes)" if description is present' do
       expect(subject.to_s).to\

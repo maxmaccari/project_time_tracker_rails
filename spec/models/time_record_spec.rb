@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe TimeWork, type: :model do
+RSpec.describe TimeRecord, type: :model do
   describe 'validations' do
     it { should validate_presence_of :date }
     it { should validate_presence_of :project }
@@ -30,7 +30,7 @@ RSpec.describe TimeWork, type: :model do
         allow_nil }
 
     describe 'final hour' do
-      subject { create(:time_work, initial_hour: 3 ) }
+      subject { create(:time_record, initial_hour: 3 ) }
 
       it { should allow_value(3).for(:final_hour) }
       it { should allow_value(4).for(:final_hour) }
@@ -52,7 +52,7 @@ RSpec.describe TimeWork, type: :model do
     end
 
     describe 'initial_minute' do
-      subject { create(:time_work) }
+      subject { create(:time_record) }
 
       it 'must have to be zero by default' do
         expect(subject.initial_minute).to eq(0)
@@ -67,7 +67,7 @@ RSpec.describe TimeWork, type: :model do
     end
 
     describe 'final_minute' do
-      subject { create(:time_work, initial_minute: 30, final_hour: 0) }
+      subject { create(:time_record, initial_minute: 30, final_hour: 0) }
 
       it { should allow_value(30).for(:final_minute) }
       it { should allow_value(40).for(:final_minute) }
@@ -81,7 +81,7 @@ RSpec.describe TimeWork, type: :model do
 
   # Methods
   describe 'hours' do
-    subject { create(:time_work, initial_hour: 5) }
+    subject { create(:time_record, initial_hour: 5) }
 
     it 'must return hours from final_hour' do
       subject.final_hour = 10
@@ -107,7 +107,7 @@ RSpec.describe TimeWork, type: :model do
   # Methods
   describe 'minutes' do
     context 'same hours' do
-      subject { create(:time_work, initial_hour: 5, final_hour: 5) }
+      subject { create(:time_record, initial_hour: 5, final_hour: 5) }
 
       it 'must return minutes from initial_minutes' do
         subject.final_minute = 45
@@ -118,7 +118,7 @@ RSpec.describe TimeWork, type: :model do
     end
 
     context 'different hours' do
-      subject { create(:time_work, initial_hour: 5, final_hour: 6) }
+      subject { create(:time_record, initial_hour: 5, final_hour: 6) }
 
       it 'initial_minute less than final_minute' do
         subject.initial_minute = 15

@@ -1,6 +1,6 @@
-class CreateWorks < ActiveRecord::Migration[5.0]
+class CreateRecords < ActiveRecord::Migration[5.0]
   def change
-    create_table :works do |t|
+    create_table :records do |t|
       t.string :type, null: false, index: true
 
       t.date :date, null: false, index: true

@@ -1,4 +1,4 @@
-class Work < ApplicationRecord
+class Record < ApplicationRecord
   # Associations
   validates_presence_of :date, :project
 

@@ -24,7 +24,7 @@ RSpec.describe Project, type: :model do
   describe 'associations' do
     it { should belong_to :parent }
     it { should have_many :subprojects }
-    it { should have_many :works }
+    it { should have_many :records }
   end
 
   # Overrides
@@ -39,8 +39,8 @@ RSpec.describe Project, type: :model do
   describe 'hours' do
     subject { create(:project) }
     before(:each) do
-      create(:amount_work, hours: 3, project: subject)
-      create(:amount_work, hours: 3, project: subject)
+      create(:amount_record, hours: 3, project: subject)
+      create(:amount_record, hours: 3, project: subject)
     end
 
     it 'must return the total of hours of related amount works' do
@@ -48,24 +48,24 @@ RSpec.describe Project, type: :model do
     end
 
     it 'must return minutes converted in hour if the sum of minutes is equals to 60' do
-      create(:amount_work, minutes: 30, project: subject)
-      create(:amount_work, minutes: 30, project: subject)
+      create(:amount_record, minutes: 30, project: subject)
+      create(:amount_record, minutes: 30, project: subject)
 
       expect(subject.hours).to eq(7)
     end
 
     it 'must return minutes converted in hours if the sum of minutes is greater to 60' do
-      create(:amount_work, minutes: 45, project: subject)
-      create(:amount_work, minutes: 45, project: subject)
-      create(:amount_work, minutes: 50, project: subject)
+      create(:amount_record, minutes: 45, project: subject)
+      create(:amount_record, minutes: 45, project: subject)
+      create(:amount_record, minutes: 50, project: subject)
 
       expect(subject.hours).to eq(8)
     end
 
     it 'must return the total of hours of related project hours' do
       project = create(:project, parent: subject)
-      create(:amount_work, hours: 2, minutes: 30, project: project)
-      create(:amount_work, minutes: 30, project: project)
+      create(:amount_record, hours: 2, minutes: 30, project: project)
+      create(:amount_record, minutes: 30, project: project)
 
       expect(subject.hours).to eq(9)
     end
@@ -74,8 +74,8 @@ RSpec.describe Project, type: :model do
   describe 'minutes' do
     subject { create(:project) }
     before(:each) do
-      create(:amount_work, minutes: 25, project: subject)
-      create(:amount_work, minutes: 25, project: subject)
+      create(:amount_record, minutes: 25, project: subject)
+      create(:amount_record, minutes: 25, project: subject)
     end
 
     it 'must return the total of minutes of related amount works' do
@@ -83,21 +83,21 @@ RSpec.describe Project, type: :model do
     end
 
     it 'must return zero if sum of minutes equals to 60' do
-      create(:amount_work, minutes: 10, project: subject)
+      create(:amount_record, minutes: 10, project: subject)
 
       expect(subject.minutes).to eq(0)
     end
 
     it 'must return 30 if sum of minutes equals to 90' do
-      create(:amount_work, minutes: 40, project: subject)
+      create(:amount_record, minutes: 40, project: subject)
 
       expect(subject.minutes).to eq(30)
     end
 
     it 'must return the total of minutes of related project minutes' do
       project = create(:project, parent: subject)
-      create(:amount_work, minutes: 2, project: project)
-      create(:amount_work, minutes: 3, project: project)
+      create(:amount_record, minutes: 2, project: project)
+      create(:amount_record, minutes: 3, project: project)
 
       expect(subject.minutes).to eq(55)
     end
