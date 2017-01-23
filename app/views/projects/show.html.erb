@@ -1,11 +1,14 @@
 <%= render 'project', project: @project %>
+<%= link_to t('actions.edit'), edit_project_path(@project) %> |
+<%= link_to t('actions.destroy'), @project, method: :delete,
+  data: { confirm: t('actions.destroy_prompt', model: @project) } %>
+
+<h1><%= Project.human_attribute_name(:records) %></h1>
+<%= link_to t('actions.new', model: Record.model_name.human), new_project_record_path(@project) %>
+<%= render 'records/records', records: @project.records.order(date: :desc) %>
+
 
 <% if @project.subprojects.any? %>
   <h1><%= Project.human_attribute_name(:subprojects) %></h1>
   <%= render 'projects', projects: @project.subprojects %>
 <% end %>
-
-<%= link_to t('actions.edit'), edit_project_path(@project) %> |
-<%= link_to t('actions.destroy'), @project, method: :delete,
-  data: { confirm: t('actions.destroy_prompt', model: @project) } %> |
-<%= link_to t('actions.back'), projects_path %>

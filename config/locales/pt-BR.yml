@@ -7,6 +7,9 @@ pt-BR:
       project:
         one: Projeto
         other: Projetos
+      record:
+        one: Registro
+        other: Registros
     attributes:
       project:
         title: Título
@@ -16,6 +19,7 @@ pt-BR:
         final_date: Data Final
         active: Ativo
         subprojects: Sub-projetos
+        records: Registros
   actions:
     new: Novo %{model}
     show: Ver %{model}

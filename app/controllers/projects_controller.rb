@@ -2,14 +2,12 @@ class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
 
   # GET /projects
-  # GET /projects.json
   def index
     @projects = Project.root.active unless params[:inactives]
     @projects = Project.root if params[:inactives]
   end
 
   # GET /projects/1
-  # GET /projects/1.json
   def show
   end
 
@@ -23,43 +21,29 @@ class ProjectsController < ApplicationController
   end
 
   # POST /projects
-  # POST /projects.json
   def create
     @project = Project.new(project_params)
 
-    respond_to do |format|
-      if @project.save
-        format.html { redirect_to @project, notice: t('notifications.create', model: Project.model_name.human) }
-        format.json { render :show, status: :created, location: @project }
-      else
-        format.html { render :new }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
-      end
+    if @project.save
+      redirect_to @project, notice: t('notifications.create', model: Project.model_name.human)
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /projects/1
-  # PATCH/PUT /projects/1.json
   def update
-    respond_to do |format|
       if @project.update(project_params)
-        format.html { redirect_to @project, notice: t('notifications.update', model: Project.model_name.human) }
-        format.json { render :show, status: :ok, location: @project }
+        redirect_to @project, notice: t('notifications.update', model: Project.model_name.human)
       else
-        format.html { render :edit }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+        render :edit
       end
-    end
   end
 
   # DELETE /projects/1
-  # DELETE /projects/1.json
   def destroy
     @project.destroy
-    respond_to do |format|
-      format.html { redirect_to projects_url, notice: t('notifications.destroy', model: Project.model_name.human) }
-      format.json { head :no_content }
-    end
+      redirect_to projects_url, notice: t('notifications.destroy', model: Project.model_name.human)
   end
 
   private
