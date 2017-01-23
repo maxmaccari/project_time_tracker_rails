@@ -46,4 +46,8 @@ class Project < ApplicationRecord
     (records.inject(0) {|sum, aw| sum + aw.minutes } +
       subprojects.inject(0) {|sum, proj| sum + proj.minutes }) % 60
   end
+
+  def total_time
+    "#{hours}h #{minutes}m"
+  end
 end

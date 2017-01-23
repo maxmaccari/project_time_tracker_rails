@@ -1,25 +1,16 @@
 <table class="table">
   <thead>
     <tr>
-      <th><%= Record.human_attribute_name(:date) %></th>
-      <th><%= Record.human_attribute_name(:description) %></th>
-      <th><%= Record.human_attribute_name(:hours) %></th>
-      <th><%= Record.human_attribute_name(:minutes) %></th>
-      <th><%= Record.human_attribute_name(:type) %></th>
-      <th colspan="2"></th>
+      <th><%= Record.model_name.human %></th>
+      <th></th>
     </tr>
   </thead>
 
   <tbody>
     <% records.each do |record| %>
       <tr>
-        <td><%= l record.date %></td>
-        <td><%= record.description %></td>
-        <td><%= record.hours %></td>
-        <td><%= record.minutes %></td>
-        <td><%= record.human_type_value %></td>
-        <td><%= link_to t('actions.edit'), project_record_path(@project, record) %></td>
-        <td><%= link_to t('actions.destroy'), project_record_path(@project, record), method: :delete, data: { confirm: t('actions.destroy_prompt', model: @record) } %></td>
+        <td><%= link_to record, project_record_path(@project, record) %></td>
+        <td><%= link_to t('actions.destroy'), project_record_path(@project, record), method: :delete, data: { confirm: t('actions.destroy_prompt', model: Record.model_name.human.downcase) } %></td>
       </tr>
     <% end %>
   </tbody>

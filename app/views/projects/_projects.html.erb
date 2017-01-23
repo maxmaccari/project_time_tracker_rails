@@ -5,6 +5,7 @@
       <th><%= Project.human_attribute_name(:description) %></th>
       <th><%= Project.human_attribute_name(:initial_date) %></th>
       <th><%= Project.human_attribute_name(:final_date) %></th>
+      <th><%= Project.human_attribute_name(:total_time) %></th>
     </tr>
   </thead>
 
@@ -15,6 +16,7 @@
         <td><%= project.description %></td>
         <td><%= l project.initial_date if project.initial_date %></td>
         <td><%= l project.final_date if project.final_date %></td>
+        <td><%= project.total_time %></td>
       </tr>
     <% end %>
   </tbody>

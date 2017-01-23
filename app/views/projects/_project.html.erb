@@ -12,6 +12,12 @@
       <div class="final-date">
       <strong><%= Project.human_attribute_name(:final_date) %>:</strong> <%= l project.final_date %></div>
     <% end %>
+
+    <div class="total-time">
+      <strong><%= Project.human_attribute_name(:total_time) %>:</strong>
+      <%= project.total_time %>
+    </div>
+
     <% if project.parent.present? %>
     <div class="parent">
       <strong><%= Project.human_attribute_name(:parent) %>:</strong>
