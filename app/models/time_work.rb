@@ -16,6 +16,40 @@ class TimeWork < ApplicationRecord
 
   validate :final_time_cannot_be_before_initial_time
 
+  # Associations
+  belongs_to :project
+
+  # Callbacks
+  before_save :initial_and_final_minutes_makers
+
+  # Methods
+  def hours
+    initial_and_final_minutes_makers
+    hours = 0
+    if final_hour.present?
+      hours += final_hour - initial_hour
+      if initial_minute.present? && final_minute.present?
+        hours -= initial_minute > final_minute ? 1 : 0
+      end
+    end
+    hours
+  end
+
+  def minutes
+    minutes = 0
+    if final_hour.present? && final_minute.present?
+      if final_hour == initial_hour
+        minutes += final_minute - initial_minute
+      else
+        minutes += final_minute - initial_minute if initial_minute < final_minute
+        minutes += 60 - (initial_minute - final_minute) if initial_minute > final_minute
+      end
+    end
+    minutes
+  end
+
+  # Aux Methods
+  private
   def final_time_cannot_be_before_initial_time
     if initial_hour.present? && final_hour.present?
       if final_hour < initial_hour
@@ -29,12 +63,6 @@ class TimeWork < ApplicationRecord
     end
   end
 
-  # Associations
-  belongs_to :project
-
-  # Callbacks
-  before_save :initial_and_final_minutes_makers
-
   def initial_and_final_minutes_makers
     if self.final_minute.blank?
       self.final_minute = 0
@@ -47,11 +75,5 @@ class TimeWork < ApplicationRecord
     if self.final_hour.blank?
       self.final_minute = nil
     end
-  end
-
-  # Methods
-  def hours
-    return (final_time.hour - initial_time.hour) if final_time.present?
-    (Time.current.hour - initial_time.hour)
   end
 end

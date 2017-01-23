@@ -7,10 +7,6 @@ class CreateProjects < ActiveRecord::Migration[5.0]
       t.date :initial_date
       t.date :final_date
 
-      t.integer :estimated_hours
-      t.decimal :hour_value
-      t.decimal :project_value
-
       t.references :parent, index: true, foreign_key: { to_table: :projects }
 
       t.boolean :active, null: false, default: true, index: true

@@ -79,33 +79,70 @@ RSpec.describe TimeWork, type: :model do
     it { should belong_to :project }
   end
 
-  # # Methods
-  # describe 'hours' do
-  #   subject { create(:time_work, initial_time: Time.current - 3.hours) }
-  #
-  #   it 'must return hours from now if final_time is nil' do
-  #     expect(subject.hours).to eq(3)
-  #   end
-  #
-  #   it 'must return hours from final_time if final_time is not nil' do
-  #     subject.final_time = Time.current - 2.hours
-  #     expect(subject.hours).to eq(1)
-  #   end
-  # end
-  #
-  # # Methods
-  # describe 'minutes' do
-  #   subject { create(:time_work, initial_time: Time.current - 210.minutes) }
-  #
-  #   it 'must return hours from now if final_time is nil' do
-  #     expect(subject.hours).to eq(3)
-  #     expect(subject.minutes).to eq(30)
-  #   end
-  #
-  #   it 'must return hours from final_time if final_time is not nil' do
-  #     subject.final_time = Time.current - 150.minutes
-  #     expect(subject.hours).to eq(2)
-  #     expect(subject.minutes).to eq(30)
-  #   end
-  # end
+  # Methods
+  describe 'hours' do
+    subject { create(:time_work, initial_hour: 5) }
+
+    it 'must return hours from final_hour' do
+      subject.final_hour = 10
+      expect(subject.hours).to eq(5)
+    end
+
+    it 'must return 0 if minutes count only minutes' do
+      subject.final_hour = 6
+      subject.initial_minute = 30
+
+      expect(subject.hours).to eq(0)
+    end
+
+    it 'must return 1 if minutes are equals' do
+      subject.final_hour = 6
+      subject.initial_minute = 30
+      subject.final_minute = 30
+
+      expect(subject.hours).to eq(1)
+    end
+  end
+
+  # Methods
+  describe 'minutes' do
+    context 'same hours' do
+      subject { create(:time_work, initial_hour: 5, final_hour: 5) }
+
+      it 'must return minutes from initial_minutes' do
+        subject.final_minute = 45
+
+        expect(subject.hours).to eq(0)
+        expect(subject.minutes).to eq(45)
+      end
+    end
+
+    context 'different hours' do
+      subject { create(:time_work, initial_hour: 5, final_hour: 6) }
+
+      it 'initial_minute less than final_minute' do
+        subject.initial_minute = 15
+        subject.final_minute = 20
+
+        expect(subject.hours).to eq(1)
+        expect(subject.minutes).to eq(5)
+      end
+
+      it 'minutes equals must return 0' do
+        subject.initial_minute = 15
+        subject.final_minute = 15
+
+        expect(subject.hours).to eq(1)
+        expect(subject.minutes).to eq(0)
+      end
+
+      it 'initial_minute more than final_minute' do
+        subject.initial_minute = 15
+        subject.final_minute = 10
+
+        expect(subject.hours).to eq(0)
+        expect(subject.minutes).to eq(55)
+      end
+    end
+  end
 end
