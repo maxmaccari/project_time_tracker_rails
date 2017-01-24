@@ -2,28 +2,13 @@ require 'rails_helper'
 
 RSpec.describe TimeRecord, type: :model do
   describe 'validations' do
-    it { should validate_presence_of :initial_hour }
 
-    it { should validate_numericality_of(:initial_hour).
+    it { should validate_numericality_of(:initial_time).
         is_greater_than_or_equal_to(0).
-        is_less_than(24).
         only_integer }
 
-    it { should validate_numericality_of(:final_hour).
+    it { should validate_numericality_of(:final_time).
         is_greater_than_or_equal_to(0).
-        is_less_than(24).
-        only_integer.
-        allow_nil }
-
-    it { should validate_numericality_of(:initial_minute).
-        is_greater_than_or_equal_to(0).
-        is_less_than(60).
-        only_integer.
-        allow_nil}
-
-    it { should validate_numericality_of(:final_minute).
-        is_greater_than_or_equal_to(0).
-        is_less_than(60).
         only_integer.
         allow_nil }
 
@@ -33,20 +18,6 @@ RSpec.describe TimeRecord, type: :model do
       it { should allow_value(3).for(:final_hour) }
       it { should allow_value(4).for(:final_hour) }
       it { should_not allow_value(2).for(:final_hour) }
-
-      it 'set final_minute to nil if final_hour is nil' do
-        subject.final_minute = 10
-        subject.save
-
-        expect(subject.final_minute).to be_nil
-      end
-
-      it 'set final_minute to 0 if final_hour is not nil' do
-        subject.final_hour = 10
-        subject.save
-
-        expect(subject.final_minute).to eq(0)
-      end
     end
 
     describe 'initial_minute' do
@@ -65,11 +36,26 @@ RSpec.describe TimeRecord, type: :model do
     end
 
     describe 'final_minute' do
-      subject { create(:time_record, initial_minute: 30, final_hour: 0) }
+      subject { create(:time_record, initial_minute: 30) }
 
       it { should allow_value(30).for(:final_minute) }
       it { should allow_value(40).for(:final_minute) }
       it { should_not allow_value(29).for(:final_minute) }
+    end
+  end
+
+  describe 'final_time' do
+    subject { create(:time_record) }
+    it 'is nil by default' do
+      expect(subject.final_time).to be_nil
+    end
+
+    it 'final_hour to return de current hour if is set to nil' do
+      expect(subject.final_hour).to eq(Time.now.hour)
+    end
+
+    it 'set final_minute to time now if final_hour is nil' do
+      expect(subject.final_minute).to eq(Time.now.min)
     end
   end
 

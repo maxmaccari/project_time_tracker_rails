@@ -45,18 +45,15 @@ ActiveRecord::Schema.define(version: 20170123193834) do
   end
 
   create_table "records", force: :cascade do |t|
-    t.string   "type",                       null: false
-    t.date     "date",                       null: false
+    t.string   "type",                     null: false
+    t.date     "date",                     null: false
     t.text     "description"
-    t.integer  "initial_hour",   default: 0
-    t.integer  "initial_minute", default: 0
-    t.integer  "final_hour"
-    t.integer  "final_minute"
-    t.integer  "hours",          default: 0
-    t.integer  "minutes",        default: 0
-    t.integer  "project_id",                 null: false
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "time",         default: 0
+    t.integer  "initial_time", default: 0
+    t.integer  "final_time"
+    t.integer  "project_id",               null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.index ["date"], name: "index_records_on_date", using: :btree
     t.index ["project_id"], name: "index_records_on_project_id", using: :btree
     t.index ["type"], name: "index_records_on_type", using: :btree
