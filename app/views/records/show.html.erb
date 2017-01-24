@@ -1,4 +1,4 @@
-<h1><%= t('actions.editing', model: @record) %></h1>
+<h1><%= t('actions.editing', model: Record.model_name.human) %></h1>
 
 <%= render 'form', record: @record %>
 
