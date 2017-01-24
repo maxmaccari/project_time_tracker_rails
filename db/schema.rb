@@ -48,12 +48,12 @@ ActiveRecord::Schema.define(version: 20170123193834) do
     t.string   "type",                       null: false
     t.date     "date",                       null: false
     t.text     "description"
-    t.integer  "initial_hour",   default: 0, null: false
-    t.integer  "initial_minute", default: 0, null: false
+    t.integer  "initial_hour",   default: 0
+    t.integer  "initial_minute", default: 0
     t.integer  "final_hour"
     t.integer  "final_minute"
-    t.integer  "hours",          default: 0, null: false
-    t.integer  "minutes",        default: 0, null: false
+    t.integer  "hours",          default: 0
+    t.integer  "minutes",        default: 0
     t.integer  "project_id",                 null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
