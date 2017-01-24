@@ -2,8 +2,6 @@ require 'rails_helper'
 
 RSpec.describe TimeRecord, type: :model do
   describe 'validations' do
-    it { should validate_presence_of :date }
-    it { should validate_presence_of :project }
     it { should validate_presence_of :initial_hour }
 
     it { should validate_numericality_of(:initial_hour).
@@ -73,10 +71,6 @@ RSpec.describe TimeRecord, type: :model do
       it { should allow_value(40).for(:final_minute) }
       it { should_not allow_value(29).for(:final_minute) }
     end
-  end
-
-  describe 'associations' do
-    it { should belong_to :project }
   end
 
   # Methods

@@ -102,4 +102,13 @@ RSpec.describe Project, type: :model do
       expect(subject.minutes).to eq(55)
     end
   end
+
+  describe '#total_time' do
+    subject { create(:project) }
+    before(:each) { create(:amount_record, hours: 3, minutes: 30, project: subject) }
+
+    it 'must return "3h 30m"' do
+      expect(subject.total_time).to eq('3h 30m')
+    end
+  end
 end
