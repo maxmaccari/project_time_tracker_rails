@@ -37,7 +37,7 @@ class TimeRecord < Record
   end
 
   def final_minute=(value)
-    self.final_time = value.present? ? hours_and_minutes_to_time(time_to_hours(final_time), value) : nil
+    self.final_time = value.present? ? hours_and_minutes_to_time(time_to_hours(final_time), value) : self.final_time
   end
 
   def hours

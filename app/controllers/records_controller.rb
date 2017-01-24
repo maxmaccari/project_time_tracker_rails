@@ -58,8 +58,11 @@ class RecordsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def record_params
-      return params.require(:amount_record).permit(:type, :date, :description, :hours, :minutes) if params[:amount_record].present?
-      return params.require(:time_record).permit(:type, :date, :description, :initial_hour, :initial_minute, :final_hour, :final_minute) if params[:time_record].present?
-      params.require(:record).permit(:type, :date, :description, :initial_hour, :initial_minute, :final_hour, :final_minute, :hours, :minutes)
+      model_name = :record
+      model_name = :amount_record if params[:amount_record].present?
+      model_name = :time_record if params[:time_record].present?
+      params.require(model_name).permit(:type, :date, :description,
+        :initial_hour, :initial_minute, :final_hour, :final_minute,
+        :hours, :minutes)
     end
 end
