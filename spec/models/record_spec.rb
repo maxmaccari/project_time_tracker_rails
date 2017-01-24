@@ -5,7 +5,7 @@ RSpec.describe Record, type: :model do
     it { should validate_presence_of :date }
     it { should validate_presence_of :project }
   end
-  
+
   describe 'associations' do
     it { should belong_to :project }
   end

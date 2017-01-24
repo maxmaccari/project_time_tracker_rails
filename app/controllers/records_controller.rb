@@ -27,7 +27,7 @@ class RecordsController < ApplicationController
       if @record.update(record_params)
         redirect_to @project, notice: t('notifications.update', model: Record.model_name.human)
       else
-        render :edit
+        render :show
       end
   end
 
