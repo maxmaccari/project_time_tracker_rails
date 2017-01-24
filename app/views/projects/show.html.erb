@@ -1,7 +1,9 @@
 <%= render 'project', project: @project %>
-<%= link_to t('actions.edit'), edit_project_path(@project) %> |
+<%= link_to t('actions.edit'), edit_project_path(@project),
+  class: 'btn btn-primary' %>
 <%= link_to t('actions.destroy'), @project, method: :delete,
-  data: { confirm: t('actions.destroy_prompt', model: @project) } %>
+  data: { confirm: t('actions.destroy_prompt', model: @project) },
+  class: 'btn btn-danger' %>
 
 
 <h3><%= Project.human_attribute_name(:opened_records) %></h3>
@@ -17,7 +19,8 @@
 <% end %>
 
 <h3><%= Project.human_attribute_name(:records) %></h3>
-<%= link_to t('actions.new', model: Record.model_name.human), new_project_record_path(@project) %>
+<%= link_to t('actions.new', model: Record.model_name.human), new_project_record_path(@project),
+  class: 'btn btn-success' %>
 <%= render 'records/records', records: @project.records.order(date: :desc) %>
 
 
