@@ -47,12 +47,18 @@ pt-BR:
     destroy: Excluir
     destroy_prompt: 'Tem certeza que deseja excluir %{model}? A exclusão é irreversível!'
     back: 'Voltar'
+    cancel: 'Cancelar'
+    cancel_prompt:
+    finish: Concluir
   notifications:
     create: '%{model} criado com sucesso.'
     update: '%{model} atualizado com sucesso.'
     destroy: '%{model} excluído com sucesso.'
     empty: 'Você não tem %{model} cadastrados no momento. Clique em %{link} para
     cadastrar.'
+  registry_form:
+    description: Descrição
+    start_registry: Começar a registrar.
   devise:
     login: Entrar
     logout: Sair

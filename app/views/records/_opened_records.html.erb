@@ -11,11 +11,29 @@
   <tbody>
     <% records.each do |record| %>
       <tr>
-        <td><%= link_to record.date.strftime("%d/%m/%Y") + ' - ' + "%02d:%02d" % [record.initial_hour, record.initial_minute], project_record_path(@project, record) %></td>
-        <td><%= link_to record.description, project_record_path(@project, record) %></td>
-        <td><%= link_to record.total_time, project_record_path(@project, record) %></td>
-        <td class="text-right"><%= button_to 'Concluir', project_record_path(@project, id: record.id, record: [], close: true), method: 'patch', class: 'btn btn-success', form: {style: 'display: inline'} if record.opened? %>
-            <%= link_to 'Cancelar', project_record_path(@project, record), method: :delete, data: { confirm: 'Tem certeza que deseja cancelar este registro?' }, class: 'btn btn-danger' %></td>
+        <td>
+          <%= link_to record.date.strftime("%d/%m/%Y") + ' - ' + "%02d:%02d" %
+            [record.initial_hour, record.initial_minute],
+            project_record_path(@project, record) %>
+        </td>
+        <td>
+          <%= link_to record.description,
+            project_record_path(@project, record) %>
+        </td>
+        <td>
+          <%= link_to record.total_time,
+            project_record_path(@project, record) %>
+        </td>
+        <td class="text-right">
+          <%= button_to t('actions.finish'), project_record_path(@project,
+            id: record.id, record: [], close: true), method: 'patch',
+            class: 'btn btn-success', form: {class: 'inline'}\
+              if record.opened? %>
+            <%= link_to t('actions.cancel'),
+              project_record_path(@project, record),
+              method: :delete, data: { confirm: t('actions.cancel_prompt') },
+              class: 'btn btn-danger' %>
+          </td>
       </tr>
     <% end %>
   </tbody>

@@ -9,8 +9,8 @@
   wrapper: :inline_form, html: {class: 'form-inline'}) do |f| %>
   <%= f.input :type, as: :hidden %>
   <%= f.input :date, as: :hidden %>
-  <%= f.input :description, as: :string, label: false, input_html: { placeholder: 'Descrição' } %>
-  <%= f.submit 'Começar a registrar' ,class: 'btn btn-success' %>
+  <%= f.input :description, as: :string, label: false, input_html: { placeholder: t('registry_form.description') } %>
+  <%= f.submit t('registry_form.start_registry') ,class: 'btn btn-success' %>
 <% end %>
 <% if @project.opened_records? %>
   <%= render 'records/opened_records', records: @project.opened_records %>
