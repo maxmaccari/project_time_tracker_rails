@@ -27,4 +27,4 @@ document.addEventListener("turbolinks:load", function() {
   });
 
   $('.time-element').inputmask({"mask" : "99"});
-})
+});
