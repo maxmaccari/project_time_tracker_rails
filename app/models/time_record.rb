@@ -25,11 +25,11 @@ class TimeRecord < Record
   end
 
   def final_hour
-    final_time.present? ? time_to_hours(final_time) : Time.now.hour
+    final_time.present? ? time_to_hours(final_time) : Time.current.hour
   end
 
   def final_minute
-    final_time.present? ? time_to_minutes(final_time) : Time.now.min
+    final_time.present? ? time_to_minutes(final_time) : Time.current.min
   end
 
   def final_hour=(value)
@@ -41,11 +41,11 @@ class TimeRecord < Record
   end
 
   def hours
-    final_time.present? ? time_to_hours(final_time - initial_time) : time_to_hours( Time.now.hour.hour.value - initial_time)
+    final_time.present? ? time_to_hours(final_time - initial_time) : Time.current.hour - time_to_hours(initial_time)
   end
 
   def minutes
-    final_time.present? ? time_to_minutes(final_time - initial_time) : time_to_minutes( (Time.now.hour.hour + Time.now.min.minutes).value - initial_time)
+    final_time.present? ? time_to_minutes(final_time - initial_time) : time_to_minutes( (Time.current.hour.hour + Time.current.min.minutes).value - initial_time)
   end
 
   def opened?

@@ -51,11 +51,11 @@ RSpec.describe TimeRecord, type: :model do
     end
 
     it 'final_hour to return de current hour if is set to nil' do
-      expect(subject.final_hour).to eq(Time.now.hour)
+      expect(subject.final_hour).to eq(Time.current.hour)
     end
 
     it 'set final_minute to time now if final_hour is nil' do
-      expect(subject.final_minute).to eq(Time.now.min)
+      expect(subject.final_minute).to eq(Time.current.min)
     end
   end
 
