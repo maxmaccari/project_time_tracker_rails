@@ -21,6 +21,7 @@ pt-BR:
         subprojects: Sub-projetos
         records: Registros
         total_time: Tempo total
+        opened_records: Registros abertos
       record:
         type: Tipo
         type_values:
@@ -36,6 +37,8 @@ pt-BR:
         minutes: Minutos
         project: Projeto
         total_time: Tempo total
+        opened: Aberto
+        closed: Fechado
   actions:
     new: Novo %{model}
     show: Ver %{model}

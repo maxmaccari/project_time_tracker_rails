@@ -10,7 +10,7 @@
     <% records.each do |record| %>
       <tr>
         <td><%= link_to record, project_record_path(@project, record) %></td>
-        <td><%= link_to t('actions.destroy'), project_record_path(@project, record), method: :delete, data: { confirm: t('actions.destroy_prompt', model: Record.model_name.human.downcase) } %></td>
+        <td class="text-right"><%= link_to t('actions.destroy'), project_record_path(@project, record), method: :delete, data: { confirm: t('actions.destroy_prompt', model: Record.model_name.human.downcase) }, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>

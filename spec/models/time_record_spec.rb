@@ -67,6 +67,32 @@ RSpec.describe TimeRecord, type: :model do
     end
   end
 
+  describe '#opened?' do
+    subject { create(:time_record) }
+
+    it 'is true if final_time is nil' do
+      expect(subject.opened?).to be_truthy
+    end
+
+    it 'is false if final_time is not nil' do
+      subject.final_hour = 5
+      expect(subject.opened?).to be_falsey
+    end
+  end
+
+  describe '#closed?' do
+    subject { create(:time_record) }
+
+    it 'is true if final_time is nil' do
+      expect(subject.closed?).to be_falsey
+    end
+
+    it 'is false if final_time is not nil' do
+      subject.final_hour = 5
+      expect(subject.closed?).to be_truthy
+    end
+  end
+
   # Methods
   describe 'hours' do
     subject { create(:time_record, initial_hour: 5) }

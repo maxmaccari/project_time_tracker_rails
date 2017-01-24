@@ -41,11 +41,23 @@ class TimeRecord < Record
   end
 
   def hours
-    final_time.present? ? time_to_hours(final_time - initial_time) : Time.now.hour - time_to_hours(initial_time)
+    final_time.present? ? time_to_hours(final_time - initial_time) : time_to_hours( Time.now.hour.hour.value - initial_time)
   end
 
   def minutes
-    final_time.present? ? time_to_minutes(final_time - initial_time) : Time.now.min - time_to_minutes(initial_time)
+    final_time.present? ? time_to_minutes(final_time - initial_time) : time_to_minutes( (Time.now.hour.hour + Time.now.min.minutes).value - initial_time)
+  end
+
+  def opened?
+    final_time.blank?
+  end
+
+  def closed?
+    final_time.present?
+  end
+
+  def total_time
+    super + (opened? ? " [#{I18n.t('activerecord.attributes.record.opened')}]" : '')
   end
 
   # Aux Methods

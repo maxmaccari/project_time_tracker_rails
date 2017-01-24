@@ -3,12 +3,25 @@
 <%= link_to t('actions.destroy'), @project, method: :delete,
   data: { confirm: t('actions.destroy_prompt', model: @project) } %>
 
-<h1><%= Project.human_attribute_name(:records) %></h1>
+
+<h3><%= Project.human_attribute_name(:opened_records) %></h3>
+<%= simple_form_for(@project.opened_records.build(date: Date.today), url: project_records_path(@project, open: true),
+  wrapper: :inline_form, html: {class: 'form-inline'}) do |f| %>
+  <%= f.input :type, as: :hidden %>
+  <%= f.input :date, as: :hidden %>
+  <%= f.input :description, as: :string, label: false, input_html: { placeholder: 'Descrição' } %>
+  <%= f.submit 'Começar a registrar' ,class: 'btn btn-success' %>
+<% end %>
+<% if @project.opened_records? %>
+  <%= render 'records/opened_records', records: @project.opened_records %>
+<% end %>
+
+<h3><%= Project.human_attribute_name(:records) %></h3>
 <%= link_to t('actions.new', model: Record.model_name.human), new_project_record_path(@project) %>
 <%= render 'records/records', records: @project.records.order(date: :desc) %>
 
 
 <% if @project.subprojects.any? %>
-  <h1><%= Project.human_attribute_name(:subprojects) %></h1>
+  <h3><%= Project.human_attribute_name(:subprojects) %></h3>
   <%= render 'projects', projects: @project.subprojects %>
 <% end %>

@@ -35,6 +35,14 @@ class Project < ApplicationRecord
   end
 
   # Methods
+  def opened_records
+    records.opened.order(date: :desc)
+  end
+
+  def opened_records?
+    opened_records.any?
+  end
+
   def hours
     minutes = records.inject(0) {|sum, aw| sum + aw.minutes }
     minutes += subprojects.inject(0) { |sum, proj| sum + proj.minutes }

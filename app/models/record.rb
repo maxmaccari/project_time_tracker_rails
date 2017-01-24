@@ -11,6 +11,9 @@ class Record < ApplicationRecord
 
   attr_accessor :hours, :minutes, :initial_hour, :initial_minute, :final_hour, :final_minute
 
+  # Scopes
+  scope :opened, -> { where(type:'TimeRecord', final_time: nil) }
+
   def hours
     time_to_hours(time)
   end
@@ -52,6 +55,14 @@ class Record < ApplicationRecord
 
   def ftime
     "%02d:%02d" % [hours, minutes]
+  end
+
+  def opened?
+    false
+  end
+
+  def closed?
+    true
   end
 
   protected

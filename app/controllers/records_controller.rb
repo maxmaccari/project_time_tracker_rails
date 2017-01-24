@@ -14,7 +14,7 @@ class RecordsController < ApplicationController
   # POST /records
   def create
     @record = @project.records.new(record_params)
-
+    @record.initial_time = Time.now.hour.hour.value + Time.now.min.minutes.value if params[:open]
     if @record.save
       redirect_to @project, notice: t('notifications.create', model: Record.model_name.human)
     else
@@ -24,11 +24,20 @@ class RecordsController < ApplicationController
 
   # PATCH/PUT /records/1
   def update
-      if @record.update(record_params)
+    if params[:close]
+      @record.final_time = Time.now.hour.hour.value + Time.now.min.minutes.value
+      if @record.save
+        redirect_to @project, notice: 'Registro fechado com sucesso.'
+      else
+        redirect_to @project, alert: 'Não foi possível fechar o registro.'
+      end
+    else
+      if @record.update_attributes(record_params)
         redirect_to @project, notice: t('notifications.update', model: Record.model_name.human)
       else
         render :show
       end
+    end
   end
 
   # DELETE /records/1
