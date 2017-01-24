@@ -13,6 +13,9 @@ pt-BR:
     labels:
       defaults:
         remember_me: 'Permanecer logado'
+        amount_time: Quantidade de Tempo
+        initial_time: Tempo Inicial
+        final_time: Tempo Final
     # labels:
     #   defaults:
     #     password: 'Password'

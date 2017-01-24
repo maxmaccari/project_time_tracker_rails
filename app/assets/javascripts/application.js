@@ -25,4 +25,6 @@ document.addEventListener("turbolinks:load", function() {
     language: "pt-BR",
     todayHighlight: true
   });
+
+  $('.time-element').inputmask({"mask" : "99"});
 })

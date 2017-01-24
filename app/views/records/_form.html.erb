@@ -9,15 +9,29 @@
     <%= f.input :date %>
     <%= f.input :description %>
 
-    <%= f.input :initial_hour, wrapper_html: {class: 'time_record_field'} %>
-    <%= f.input :initial_minute, wrapper_html: {class: 'time_record_field'} %>
-    <%= f.input :final_hour, wrapper_html: {class: 'time_record_field'} %>
-    <%= f.input :final_minute, wrapper_html: {class: 'time_record_field'} %>
+    <%= f.input :initial_time, label_html: {for: "#{f.object_name}_initial_hour"}, wrapper_html: {class: 'time_record_field'} do %>
+      <div class="input-group">
+        <%= f.input :initial_hour, wrapper: false, label: false %>
+        <div class="input-group-addon">:</div>
+        <%= f.input :initial_minute, wrapper: false, label: false %>
+      </div>
+    <% end %>
 
-    <%= f.input :hours, wrapper_html: {class: 'amount_record_field'} %>
-    <%= f.input :minutes, wrapper_html: {class: 'amount_record_field'} %>
+    <%= f.input :final_time, label_html: { for: "#{f.object_name}_final_hour" }, wrapper_html: {class: 'time_record_field'} do %>
+      <div class="input-group">
+        <%= f.input :final_hour, wrapper: false, label: false %>
+        <div class="input-group-addon">:</div>
+        <%= f.input :final_minute, wrapper: false, label: false %>
+      </div>
+    <% end %>
 
-  </div>
+    <%= f.input :amount_time, label_html: { for: "#{f.object_name}_hours" }, wrapper_html: {class: 'amount_record_field'} do %>
+      <div class="input-group">
+        <%= f.input :hours, wrapper: false, label: false %>
+        <div class="input-group-addon">:</div>
+        <%= f.input :minutes, wrapper: false, label: false %>
+      </div>
+    <% end %>
 
   <div class="form-actions">
     <%= f.button :submit %>
