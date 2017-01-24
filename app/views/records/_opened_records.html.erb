@@ -1,8 +1,8 @@
-<table class="table">
+<table class="table responsive-table">
   <thead>
     <tr>
       <th><%= Record.human_attribute_name(:date) %></th>
-      <th><%= Record.model_name.human %></th>
+      <th><%= Record.human_attribute_name(:description) %></th>
       <th><%= Record.human_attribute_name(:total_time) %></th>
       <th></th>
     </tr>
@@ -11,20 +11,20 @@
   <tbody>
     <% records.each do |record| %>
       <tr>
-        <td>
+        <td data-th="<%= Record.human_attribute_name(:date) %>">
           <%= link_to record.date.strftime("%d/%m/%Y") + ' - ' + "%02d:%02d" %
             [record.initial_hour, record.initial_minute],
             project_record_path(@project, record) %>
         </td>
-        <td>
+        <td data-th="<%= Record.human_attribute_name(:description) %>">
           <%= link_to record.description,
             project_record_path(@project, record) %>
         </td>
-        <td>
+        <td data-th="<%= Record.human_attribute_name(:total_time) %>">
           <%= link_to record.total_time,
             project_record_path(@project, record) %>
         </td>
-        <td class="text-right">
+        <td class="text-right" data-th="<%= t('actions.actions') %>">
           <%= button_to t('actions.finish'), project_record_path(@project,
             id: record.id, record: [], close: true), method: 'patch',
             class: 'btn btn-success', form: {class: 'inline'}\
