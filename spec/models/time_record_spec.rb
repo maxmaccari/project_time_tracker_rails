@@ -44,7 +44,7 @@ RSpec.describe TimeRecord, type: :model do
     end
   end
 
-  describe 'final_time' do
+  describe '#final_time' do
     subject { create(:time_record) }
     it 'is nil by default' do
       expect(subject.final_time).to be_nil
@@ -56,6 +56,14 @@ RSpec.describe TimeRecord, type: :model do
 
     it 'set final_minute to time now if final_hour is nil' do
       expect(subject.final_minute).to eq(Time.now.min)
+    end
+  end
+
+  describe '#initial_time' do
+    subject { create(:time_record) }
+
+    it 'must get the current time by default' do
+      expect(subject.final_time).to be_nil
     end
   end
 

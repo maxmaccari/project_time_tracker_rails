@@ -31,6 +31,13 @@ RSpec.describe Record, type: :model do
     end
   end
 
+  describe '#ftime' do
+    subject { create(:amount_record, hours: 3, minutes: 30) }
+    it 'returns the time formatted' do
+      expect(subject.ftime).to eq("03:30")
+    end
+  end
+
   describe '#total_time' do
     subject { create(:amount_record, hours: 3, minutes: 30) }
 
