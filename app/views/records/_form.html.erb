@@ -6,7 +6,9 @@
       collection: Record.types.map { |type| [Record.human_type_value(type), type] },
       as: :radio_buttons %>
 
-    <%= f.input :date %>
+      <%= f.input :date, as: :string, input_html: {class: 'datepicker',
+        value: @record.date ? @record.date.strftime("%d/%m/%Y") : '',
+        data: { 'date-today-btn': 'linked' } } %>
     <%= f.input :description %>
 
     <%= f.input :initial_time, label_html: {for: "#{f.object_name}_initial_hour"}, wrapper_html: {class: 'time_record_field'} do %>
