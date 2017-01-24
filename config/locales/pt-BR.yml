@@ -59,7 +59,7 @@ pt-BR:
     cadastrar.'
   registry_form:
     description: Descrição
-    start_registry: Começar a registrar.
+    start_registry: Começar a registrar
   devise:
     login: Entrar
     logout: Sair

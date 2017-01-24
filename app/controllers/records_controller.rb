@@ -14,7 +14,7 @@ class RecordsController < ApplicationController
   # POST /records
   def create
     @record = @project.records.new(record_params)
-    @record.initial_time = Time.now.hour.hour.value + Time.now.min.minutes.value if params[:open]
+    @record.initial_time = Time.current.hour.hour.value + Time.current.min.minutes.value if params[:open]
     if @record.save
       redirect_to @project, notice: t('notifications.create', model: Record.model_name.human)
     else
