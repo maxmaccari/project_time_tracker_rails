@@ -1,4 +1,4 @@
-<table class="table responsive-table">
+<table class="table table-condensed responsive-table">
   <thead>
     <tr>
       <th><%= Record.human_attribute_name(:date) %></th>
@@ -24,7 +24,8 @@
           <%= link_to record.total_time,
             project_record_path(@project, record) %>
         </td>
-        <td class="text-right" data-th="<%= t('actions.actions') %>">
+        <td data-th="<%= t('actions.actions') %>">
+          <div class="text-right">
           <%= button_to t('actions.finish'), project_record_path(@project,
             id: record.id, record: [], close: true), method: 'patch',
             class: 'btn btn-success', form: {class: 'inline'}\
@@ -33,7 +34,8 @@
               project_record_path(@project, record),
               method: :delete, data: { confirm: t('actions.cancel_prompt') },
               class: 'btn btn-danger' %>
-          </td>
+          </div>
+        </td>
       </tr>
     <% end %>
   </tbody>
