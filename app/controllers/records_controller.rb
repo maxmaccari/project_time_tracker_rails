@@ -25,7 +25,7 @@ class RecordsController < ApplicationController
   # PATCH/PUT /records/1
   def update
     if params[:close]
-      @record.final_time = Time.now.hour.hour.value + Time.now.min.minutes.value
+      @record.final_time = Time.current.hour.hour.value + Time.current.min.minutes.value
       if @record.save
         redirect_to @project, notice: 'Registro fechado com sucesso.'
       else
