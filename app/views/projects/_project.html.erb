@@ -3,7 +3,7 @@
 <div class="panel panel-default">
   <div class="panel-heading"><%= Project.human_attribute_name(:description) %></div>
   <div class="panel-body">
-    <%= project.description %>
+    <div class="description"><%= project.description %></div>
     <% if project.initial_date.present? %>
       <div class="initial-date">
       <strong><%= Project.human_attribute_name(:initial_date) %>:</strong> <%= l project.initial_date %></div>

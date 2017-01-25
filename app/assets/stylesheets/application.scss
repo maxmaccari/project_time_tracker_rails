@@ -21,6 +21,10 @@
   display: inline;
 }
 
+.description {
+  white-space: pre-wrap;
+}
+
 $breakpoint-alpha: 480px; // adjust to your needs
 
 @media all and (max-width: $breakpoint-alpha) {
