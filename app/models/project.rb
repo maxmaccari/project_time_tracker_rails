@@ -4,6 +4,10 @@ class Project < ApplicationRecord
   validate :final_date_cannot_be_before_initial_date,
     :initial_date_cannot_be_after_final_date
 
+  validates_numericality_of :estimated_time, greater_than_or_equal_to: 0,
+    only_integer: true, allow_nil: true
+
+
   def final_date_cannot_be_before_initial_date
     if final_date.present? && initial_date.present? && final_date < initial_date
       errors.add(:final_date, "cannot be before initial date")
@@ -57,5 +61,15 @@ class Project < ApplicationRecord
 
   def total_time
     "#{hours}h #{minutes}m"
+  end
+
+  # Tracking Methods
+  def total_value
+    (hours + (minutes.to_f/60.0)) * time_value if time_value.present?
+  end
+
+  def estimated_value
+    return project_value if project_value.present?
+    estimated_time * time_value if estimated_time.present? && time_value.present?
   end
 end

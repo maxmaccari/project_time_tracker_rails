@@ -4,6 +4,11 @@ RSpec.describe Project, type: :model do
   describe 'validations' do
     it { should validate_presence_of :title }
 
+    it { should validate_numericality_of(:estimated_time).
+        is_greater_than_or_equal_to(0).
+        only_integer.
+        allow_nil }
+
     describe 'final date' do
       subject { create(:project, initial_date: Date.today) }
 
@@ -109,6 +114,40 @@ RSpec.describe Project, type: :model do
 
     it 'must return "3h 30m"' do
       expect(subject.total_time).to eq('3h 30m')
+    end
+  end
+
+  describe '#total_value' do
+    subject { create(:project) }
+
+    it 'returns nil if nothing is defined' do
+      expect(subject.total_value).to be_nil
+    end
+
+    it 'returns the #total_time * #time_value if #time_value is defined' do
+      create(:amount_record, hours: 2, project: subject)
+      create(:amount_record, hours: 3, project: subject)
+      subject.time_value = 50
+      expect(subject.total_value).to eq((subject.hours + (subject.minutes.to_f/60.0)) * subject.time_value)
+    end
+  end
+
+  describe '#estimated_value' do
+    subject { create(:project) }
+
+    it 'returns the #project_value if it is not nil' do
+      subject.project_value = 3200.0
+      expect(subject.estimated_value).to eq(subject.project_value)
+    end
+
+    it 'returns the #estimated_time * #time_value if #project_value is nil' do
+      subject.estimated_time = 120
+      subject.time_value = 25.0
+      expect(subject.estimated_value).to eq(subject.estimated_time * subject.time_value)
+    end
+
+    it 'returns nil if nothing is defined' do
+      expect(subject.estimated_value).to be_nil
     end
   end
 end

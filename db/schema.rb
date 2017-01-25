@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170123193834) do
+ActiveRecord::Schema.define(version: 20170125012343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,15 +28,18 @@ ActiveRecord::Schema.define(version: 20170123193834) do
   end
 
   create_table "projects", force: :cascade do |t|
-    t.string   "title",                       null: false
+    t.string   "title",                         null: false
     t.text     "description"
     t.date     "initial_date"
     t.date     "final_date"
     t.integer  "parent_id"
-    t.boolean  "active",       default: true, null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.boolean  "active",         default: true, null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.string   "slug"
+    t.integer  "estimated_time"
+    t.decimal  "time_value"
+    t.decimal  "project_value"
     t.index ["active"], name: "index_projects_on_active", using: :btree
     t.index ["parent_id", "title"], name: "index_projects_on_parent_id_and_title", using: :btree
     t.index ["parent_id"], name: "index_projects_on_parent_id", using: :btree

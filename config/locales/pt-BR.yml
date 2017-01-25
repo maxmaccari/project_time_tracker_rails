@@ -22,6 +22,11 @@ pt-BR:
         records: Registros
         total_time: Tempo total
         opened_records: Registros abertos
+        project_value: Valor do Projeto
+        estimated_time: Tempo Estimado (em horas)
+        time_value: Valor por Hora
+        estimated_value: Valor Estimado
+        total_value: Valor Total
       record:
         type: Tipo
         type_values:

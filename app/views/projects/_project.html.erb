@@ -13,9 +13,23 @@
       <strong><%= Project.human_attribute_name(:final_date) %>:</strong> <%= l project.final_date %></div>
     <% end %>
 
-    <div class="total-time">
-      <strong><%= Project.human_attribute_name(:total_time) %>:</strong>
-      <%= project.total_time %>
+    <div class="project-estimatives">
+      <% if project.estimated_time.present? %>
+        <strong><%= Project.human_attribute_name(:estimated_time) %>:</strong> <%= project.estimated_time %>h<br>
+      <% end %>
+      <% if project.time_value.present? %>
+        <strong><%= Project.human_attribute_name(:time_value) %>:</strong> <%= number_to_currency project.time_value %><br>
+      <% end %>
+      <% if project.estimated_value.present? %>
+        <strong><%= Project.human_attribute_name(:estimated_value) %>:</strong> <%= number_to_currency project.estimated_value %><br>
+      <% end %>
+    </div>
+
+    <div class="total">
+      <strong><%= Project.human_attribute_name(:total_time) %>:</strong> <%= project.total_time %><br>
+      <% if project.total_value.present? %>
+        <strong><%= Project.human_attribute_name(:total_value) %>:</strong> <%= number_to_currency project.total_value %><br>
+      <% end %>
     </div>
 
     <% if project.parent.present? %>
