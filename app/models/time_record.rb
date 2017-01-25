@@ -61,7 +61,7 @@ class TimeRecord < Record
   end
 
   def total_time
-    super + (opened? ? " [#{I18n.t('activerecord.attributes.record.opened')}]" : '')
+    super
   end
 
   # Aux Methods

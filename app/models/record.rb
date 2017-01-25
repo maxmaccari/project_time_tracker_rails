@@ -12,7 +12,8 @@ class Record < ApplicationRecord
   attr_accessor :hours, :minutes, :initial_hour, :initial_minute, :final_hour, :final_minute
 
   # Scopes
-  scope :opened, -> { where(type:'TimeRecord', final_time: nil) }
+  scope :opened, -> { where(type: 'TimeRecord', final_time: nil) }
+  scope :closed, -> { where("(type = 'TimeRecord' AND final_time IS NOT NULL) OR (type = 'AmountRecord')") }
 
   def hours
     time_to_hours(time)

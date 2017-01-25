@@ -15,13 +15,13 @@
   <%= f.submit t('registry_form.start_registry') ,class: 'btn btn-success sm-btn-block' %>
 <% end %>
 <% if @project.opened_records? %>
-  <%= render 'records/opened_records', records: @project.opened_records %>
+  <%= render 'records/opened_records', records: @project.opened_records.order(date: :desc, created_at: :asc) %>
 <% end %>
 
 <h3><%= Project.human_attribute_name(:records) %></h3>
 <%= link_to t('actions.new', model: Record.model_name.human), new_project_record_path(@project),
   class: 'btn btn-success' %>
-<%= render 'records/records', records: @project.records.order(date: :desc) %>
+<%= render 'records/records', records: @project.records.closed.order(date: :desc, final_time: :desc, time: :desc) %>
 
 
 <% if @project.subprojects.any? %>
