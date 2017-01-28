@@ -8,7 +8,7 @@ class RecordsController < ApplicationController
 
   # GET /records/new
   def new
-    @record = @project.records.new
+    @record = @project.records.new(date: Date.current)
   end
 
   # POST /records

@@ -24,9 +24,14 @@ RSpec.describe RecordsController, type: :controller do
   end
 
   describe "GET #new" do
+    before(:each) { get :new, params: {project_id: project.id} }
+    
     it "assigns a new record as @record" do
-      get :new, params: {project_id: project.id}
       expect(assigns(:record)).to be_a_new(Record)
+    end
+
+    it 'assigns the current date to the new record' do
+      expect(assigns(:record).date).to eq(Date.current)
     end
   end
 
