@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class TimeRecord < Record
   # Validations
   validates_numericality_of :initial_time, greater_than_or_equal_to: 0,
-    only_integer: true
+                                           only_integer: true
 
   validates_numericality_of :final_time, greater_than_or_equal_to: 0,
-    only_integer: true, allow_nil: true
+                                         only_integer: true, allow_nil: true
 
   validate :final_time_cannot_be_before_initial_time
 
@@ -33,23 +35,35 @@ class TimeRecord < Record
   end
 
   def final_hour=(value)
-    self.final_time = value.present? ? hours_and_minutes_to_time(value, time_to_minutes(final_time)) : nil
+    self.final_time =
+      if value.present?
+        hours_and_minutes_to_time(value, time_to_minutes(final_time))
+      end
   end
 
   def final_minute=(value)
-    self.final_time = value.present? ? hours_and_minutes_to_time(time_to_hours(final_time), value) : self.final_time
+    self.final_time =
+      if value.present?
+        hours_and_minutes_to_time(time_to_hours(final_time), value)
+      else
+        final_time
+      end
   end
 
   def hours
-    final_time.present? ? time_to_hours(final_time - initial_time) :
-      time_to_hours( initial_time <= (Time.current.hour.hour + Time.current.min.minutes).value ?
-      ((Time.current.hour.hour + Time.current.min.minutes).value - initial_time) : 0  )
+    if final_time.present?
+      time_to_hours(final_time - initial_time)
+    else
+      current_time_hours
+    end
   end
 
   def minutes
-    final_time.present? ? time_to_minutes(final_time - initial_time) :
-      time_to_minutes( initial_time <= (Time.current.hour.hour + Time.current.min.minutes).value ?
-      ((Time.current.hour.hour + Time.current.min.minutes).value - initial_time) : 0  )
+    if final_time.present?
+      time_to_minutes(final_time - initial_time)
+    else
+      current_time_minutes
+    end
   end
 
   def opened?
@@ -64,19 +78,45 @@ class TimeRecord < Record
     super
   end
 
-  # Aux Methods
   private
+
+  def current_time
+    (Time.current.hour.hour + Time.current.min.minutes).value
+  end
+
+  def current_time_hours
+    return 0 unless initial_time <= current_time
+
+    time_to_hours(current_time - initial_time)
+  end
+
+  def current_time_minutes
+    return 0 unless initial_time <= current_time
+
+    time_to_minutes(current_time - initial_time)
+  end
+
   def final_time_cannot_be_before_initial_time
-    if initial_time.present? && final_time.present?
-      if final_time < initial_time
-        errors.add(:final_time, "cannot be before initial time")
-        if ( final_hour < initial_hour )
-          errors.add(:final_hour, "cannot be before initial hour")
-        end
-        if (final_hour == initial_hour && final_minute < initial_minute)
-          errors.add(:final_minute, "cannot be before initial minute")
-        end
-      end
-    end
+    return unless initial_time.present? && final_time.present?
+
+    initial_time_error if final_time < initial_time
+    final_hour_error if final_hour < initial_hour
+    final_minute_error if final_minute_invalid?
+  end
+
+  def initial_time_error
+    errors.add(:final_time, 'cannot be before initial time')
+  end
+
+  def final_hour_error
+    errors.add(:final_hour, 'cannot be before initial hour')
+  end
+
+  def final_minute_invalid?
+    final_hour == initial_hour && final_minute < initial_minute
+  end
+
+  def final_minute_error
+    errors.add(:final_minute, 'cannot be before initial minute')
   end
 end

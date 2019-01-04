@@ -13,6 +13,6 @@ class CreateProjects < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
-    add_index :projects, [:parent_id, :title]
+    add_index :projects, %i[parent_id title]
   end
 end

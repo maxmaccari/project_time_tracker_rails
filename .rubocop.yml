@@ -1,0 +1,23 @@
+require: rubocop-rspec
+
+RSpec/ExampleLength:
+  Max: 10
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
+AllCops:
+  Exclude:
+    - 'Gemfile'
+    - 'Rakefile'
+    - 'bin/*'
+    - 'spec/spec_helper.rb'
+    - 'db/**/*'
+    - 'config/**/*'
+
+Documentation:
+  Enabled: false

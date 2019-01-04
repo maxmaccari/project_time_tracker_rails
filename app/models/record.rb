@@ -1,19 +1,25 @@
+# frozen_string_literal: true
+
 class Record < ApplicationRecord
   # Associations
   validates_presence_of :type, :date, :project
 
   # Validations
   validates_numericality_of :time, only_integer: true,
-    greater_than_or_equal_to: 0
+                                   greater_than_or_equal_to: 0
 
   # Associations
   belongs_to :project
 
-  attr_accessor :hours, :minutes, :initial_hour, :initial_minute, :final_hour, :final_minute
+  attr_accessor :initial_hour, :initial_minute, :final_hour, :final_minute
 
   # Scopes
   scope :opened, -> { where(type: 'TimeRecord', final_time: nil) }
-  scope :closed, -> { where("(type = 'TimeRecord' AND final_time IS NOT NULL) OR (type = 'AmountRecord')") }
+  scope :closed, lambda {
+    where(type: 'TimeRecord')
+      .where.not(final_time: nil)
+      .or(where(type: 'AmountRecord'))
+  }
 
   def hours
     time_to_hours(time)
@@ -34,12 +40,12 @@ class Record < ApplicationRecord
   # Overrides
   def to_s
     "#{I18n.l(date)} - #{total_time} (#{human_type_value})" +
-    (description.present? ? ": #{description}" : '')
+      (description.present? ? ": #{description}" : '')
   end
 
   # Methods
   def self.types
-    %w(TimeRecord AmountRecord)
+    %w[TimeRecord AmountRecord]
   end
 
   def self.human_type_value(type)
@@ -55,7 +61,7 @@ class Record < ApplicationRecord
   end
 
   def ftime
-    "%02d:%02d" % [hours, minutes]
+    format('%02d:%02d', hours, minutes)
   end
 
   def opened?
@@ -67,6 +73,7 @@ class Record < ApplicationRecord
   end
 
   protected
+
   # Converter
   def time_to_hours(time)
     time.to_i / 3600

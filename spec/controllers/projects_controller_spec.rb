@@ -1,96 +1,109 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ProjectsController, type: :controller do
-
   let(:user) { create(:user) }
-  before(:each) { sign_in user }
-
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     attributes_for(:project)
-  }
+  end
+  let(:invalid_attributes) do
+    { title: '' }
+  end
 
-  let(:invalid_attributes) {
-    {title: ''}
-  }
+  before { sign_in user }
 
-  describe "GET #index" do
-    it "assigns all projects as @projects" do
-      project = Project.create! valid_attributes
+  describe 'GET #index' do
+    let!(:project) { Project.create! valid_attributes }
+
+    it 'assigns all projects as @projects' do
       get :index, params: {}
+
       expect(assigns(:projects)).to eq([project])
     end
   end
 
-  describe "GET #show" do
-    it "assigns the requested project as @project" do
-      project = Project.create! valid_attributes
-      get :show, params: {id: project.to_param}
+  describe 'GET #show' do
+    let!(:project) { Project.create! valid_attributes }
+
+    it 'assigns the requested project as @project' do
+      get :show, params: { id: project.to_param }
+
       expect(assigns(:project)).to eq(project)
     end
   end
 
-  describe "GET #new" do
-    it "assigns a new project as @project" do
+  describe 'GET #new' do
+    it 'assigns a new project as @project' do
       get :new, params: {}
+
       expect(assigns(:project)).to be_a_new(Project)
     end
   end
 
-  describe "GET #edit" do
-    it "assigns the requested project as @project" do
-      project = Project.create! valid_attributes
-      get :edit, params: {id: project.to_param}
+  describe 'GET #edit' do
+    let!(:project) { Project.create! valid_attributes }
+
+    it 'assigns the requested project as @project' do
+      get :edit, params: { id: project.to_param }
+
       expect(assigns(:project)).to eq(project)
     end
   end
 
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new Project" do
-        expect {
-          post :create, params: {project: valid_attributes}
-        }.to change(Project, :count).by(1)
+  describe 'POST #create' do
+    context 'with valid params' do
+      it 'creates a new Project' do
+        expect do
+          post :create, params: { project: valid_attributes }
+        end.to change(Project, :count).by(1)
       end
 
-      it "assigns a newly created project as @project" do
-        post :create, params: {project: valid_attributes}
+      it 'assigns a newly created project as @project' do
+        post :create, params: { project: valid_attributes }
+
         expect(assigns(:project)).to be_a(Project)
         expect(assigns(:project)).to be_persisted
       end
 
-      it "redirects to the created project" do
-        post :create, params: {project: valid_attributes}
+      it 'redirects to the created project' do
+        post :create, params: { project: valid_attributes }
+
         expect(response).to redirect_to(Project.last)
       end
     end
 
-    context "with invalid params" do
-      it "assigns a newly created but unsaved project as @project" do
-        post :create, params: {project: invalid_attributes}
+    context 'with invalid params' do
+      it 'assigns a newly created but unsaved project as @project' do
+        post :create, params: { project: invalid_attributes }
+
         expect(assigns(:project)).to be_a_new(Project)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: {project: invalid_attributes}
-        expect(response).to render_template("new")
+        post :create, params: { project: invalid_attributes }
+
+        expect(response).to render_template('new')
       end
     end
   end
 
-  describe "PUT #update" do
-    context "with valid params" do
+  describe 'PUT #update' do
+    context 'with valid params' do
       let(:parent) { create(:project) }
-      let(:new_attributes) {
-        {title: 'New Title', description: 'New Description',
+      let(:new_attributes) do
+        { title: 'New Title', description: 'New Description',
           initial_date: Date.today, final_date: Date.today + 10,
-          active: false, parent_id: parent.id
-        }
-      }
+          active: false, parent_id: parent.id }
+      end
 
-      it "updates the requested project" do
-        project = Project.create! valid_attributes
-        put :update, params: {id: project.to_param, project: new_attributes}
+      let!(:project) { Project.create! valid_attributes }
+
+      it 'updates the requested project' do
+        put :update, params: { id: project.to_param, project: new_attributes }
+
         project.reload
+
         expect(project.title).to eq(new_attributes[:title])
         expect(project.description).to eq(new_attributes[:description])
         expect(project.initial_date).to eq(new_attributes[:initial_date])
@@ -99,47 +112,51 @@ RSpec.describe ProjectsController, type: :controller do
         expect(project.parent_id).to eq(new_attributes[:parent_id])
       end
 
-      it "assigns the requested project as @project" do
-        project = Project.create! valid_attributes
-        put :update, params: {id: project.to_param, project: valid_attributes}
+      it 'assigns the requested project as @project' do
+        put :update, params: { id: project.to_param, project: valid_attributes }
+
         expect(assigns(:project)).to eq(project)
       end
 
-      it "redirects to the project" do
-        project = Project.create! valid_attributes
-        put :update, params: {id: project.to_param, project: valid_attributes}
+      it 'redirects to the project' do
+        put :update, params: { id: project.to_param, project: valid_attributes }
+
         expect(response).to redirect_to(project)
       end
     end
 
-    context "with invalid params" do
-      it "assigns the project as @project" do
-        project = Project.create! valid_attributes
-        put :update, params: {id: project.to_param, project: invalid_attributes}
+    context 'with invalid params' do
+      let!(:project) { Project.create! valid_attributes }
+
+      it 'assigns the project as @project' do
+        put :update,
+            params: { id: project.to_param, project: invalid_attributes }
+
         expect(assigns(:project)).to eq(project)
       end
 
       it "re-renders the 'edit' template" do
-        project = Project.create! valid_attributes
-        put :update, params: {id: project.to_param, project: invalid_attributes}
-        expect(response).to render_template("edit")
+        put :update,
+            params: { id: project.to_param, project: invalid_attributes }
+
+        expect(response).to render_template('edit')
       end
     end
   end
 
-  describe "DELETE #destroy" do
-    it "destroys the requested project" do
-      project = Project.create! valid_attributes
-      expect {
-        delete :destroy, params: {id: project.to_param}
-      }.to change(Project, :count).by(-1)
+  describe 'DELETE #destroy' do
+    let!(:project) { Project.create! valid_attributes }
+
+    it 'destroys the requested project' do
+      expect do
+        delete :destroy, params: { id: project.to_param }
+      end.to change(Project, :count).by(-1)
     end
 
-    it "redirects to the projects list" do
-      project = Project.create! valid_attributes
-      delete :destroy, params: {id: project.to_param}
+    it 'redirects to the projects list' do
+      delete :destroy, params: { id: project.to_param }
+
       expect(response).to redirect_to(projects_url)
     end
   end
-
 end

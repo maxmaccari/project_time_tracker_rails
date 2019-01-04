@@ -1,61 +1,68 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Record, type: :model do
-  describe 'validations' do
-    it { should validate_presence_of :type }
-    it { should validate_presence_of :date }
-    it { should validate_presence_of :project }
+  subject(:record) { described_class.new }
 
-    it { should validate_numericality_of(:time).
-        is_greater_than_or_equal_to(0).
-        only_integer }
+  describe 'validations' do
+    it { is_expected.to validate_presence_of :type }
+    it { is_expected.to validate_presence_of :date }
+    it { is_expected.to validate_presence_of :project }
+
+    it {
+      expect(record).to validate_numericality_of(:time)
+        .is_greater_than_or_equal_to(0)
+        .only_integer
+    }
   end
 
   describe 'associations' do
-    it { should belong_to :project }
+    it { is_expected.to belong_to :project }
   end
 
   describe 'to_s' do
-    subject { create(:amount_record, hours: 3, minutes: 30) }
+    subject(:record) { create(:amount_record, hours: 3, minutes: 30) }
 
     it 'must include the localizate date' do
-      expect(subject.to_s).to include(I18n.l(subject.date))
+      expect(record.to_s).to include(I18n.l(record.date))
     end
 
     it 'must include total time' do
-      expect(subject.to_s).to include(subject.total_time)
+      expect(record.to_s).to include(record.total_time)
     end
 
     it 'must include description' do
-      expect(subject.to_s).to include(subject.description)
+      expect(record.to_s).to include(record.description)
     end
   end
 
   describe '#ftime' do
-    subject { create(:amount_record, hours: 3, minutes: 30) }
+    subject(:record) { create(:amount_record, hours: 3, minutes: 30) }
+
     it 'returns the time formatted' do
-      expect(subject.ftime).to eq("03:30")
+      expect(record.ftime).to eq('03:30')
     end
   end
 
   describe '#total_time' do
-    subject { create(:amount_record, hours: 3, minutes: 30) }
+    subject(:record) { create(:amount_record, hours: 3, minutes: 30) }
 
     it 'must return "3h 30m"' do
-      expect(subject.total_time).to eq('3h 30m')
+      expect(record.total_time).to eq('3h 30m')
     end
   end
 
   describe '#human_type_value' do
     it 'must return the localized value from TimeRecord' do
-      subject = create(:time_record, initial_hour: 3, initial_minute: 30)
-      expect(subject.human_type_value).to\
+      record = create(:time_record, initial_hour: 3, initial_minute: 30)
+      expect(record.human_type_value).to\
         eq(I18n.t('activerecord.attributes.record.type_values.TimeRecord'))
     end
 
     it 'must return the localized value from AmountRecord' do
-      subject = create(:amount_record, hours: 3, minutes: 30)
-      expect(subject.human_type_value).to\
+      record = create(:amount_record, hours: 3, minutes: 30)
+      expect(record.human_type_value).to\
         eq(I18n.t('activerecord.attributes.record.type_values.AmountRecord'))
     end
   end
@@ -63,7 +70,7 @@ RSpec.describe Record, type: :model do
   # Class methods
   describe 'types related methods' do
     it 'types must return the available types' do
-      expect(Record.types).to eq(%w(TimeRecord AmountRecord))
+      expect(Record.types).to eq(%w[TimeRecord AmountRecord])
     end
 
     it 'human_type_value returns de localized value of type' do

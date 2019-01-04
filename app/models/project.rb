@@ -1,23 +1,28 @@
+# frozen_string_literal: true
+
 class Project < ApplicationRecord
   # Validations
   validates_presence_of :title
   validate :final_date_cannot_be_before_initial_date,
-    :initial_date_cannot_be_after_final_date
+           :initial_date_cannot_be_after_final_date
 
   validates_numericality_of :estimated_time, greater_than_or_equal_to: 0,
-    only_integer: true, allow_nil: true
-
+                                             only_integer: true, allow_nil: true
 
   def final_date_cannot_be_before_initial_date
-    if final_date.present? && initial_date.present? && final_date < initial_date
-      errors.add(:final_date, "cannot be before initial date")
-    end
+    return unless final_date.present? &&
+                  initial_date.present? &&
+                  final_date < initial_date
+
+    errors.add(:final_date, 'cannot be before initial date')
   end
 
   def initial_date_cannot_be_after_final_date
-    if initial_date.present? && final_date.present? &&  initial_date > final_date
-      errors.add(:initial_date, "cannot be after initial date")
-    end
+    return unless initial_date.present? &&
+                  final_date.present? &&
+                  initial_date > final_date
+
+    errors.add(:initial_date, 'cannot be after initial date')
   end
 
   # Associations
@@ -48,15 +53,12 @@ class Project < ApplicationRecord
   end
 
   def hours
-    minutes = records.inject(0) {|sum, aw| sum + aw.minutes }
-    minutes += subprojects.inject(0) { |sum, proj| sum + proj.minutes }
-    records.inject(0) {|sum, aw| sum + aw.hours } + (minutes / 60) +
+    records.inject(0) { |sum, aw| sum + aw.hours } + (total_minutes / 60) +
       subprojects.inject(0) { |sum, proj| sum + proj.hours }
   end
 
   def minutes
-    (records.inject(0) {|sum, aw| sum + aw.minutes } +
-      subprojects.inject(0) {|sum, proj| sum + proj.minutes }) % 60
+    total_minutes % 60
   end
 
   def total_time
@@ -65,11 +67,20 @@ class Project < ApplicationRecord
 
   # Tracking Methods
   def total_value
-    (hours + (minutes.to_f/60.0)) * time_value if time_value.present?
+    (hours + (minutes.to_f / 60.0)) * time_value if time_value.present?
   end
 
   def estimated_value
     return project_value if project_value.present?
-    estimated_time * time_value if estimated_time.present? && time_value.present?
+
+    estimated_time * time_value if estimated_time.present? &&
+                                   time_value.present?
+  end
+
+  private
+
+  def total_minutes
+    records.inject(0) { |sum, aw| sum + aw.minutes } +
+      subprojects.inject(0) { |sum, proj| sum + proj.minutes }
   end
 end

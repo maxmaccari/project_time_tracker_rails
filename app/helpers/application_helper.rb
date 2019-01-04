@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
-  def flash_messages(opts={})
+  def flash_messages(opts = {})
     @layout_flash = opts.fetch(:layout_flash) { true }
 
     capture do
