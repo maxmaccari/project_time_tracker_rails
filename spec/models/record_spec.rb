@@ -67,6 +67,18 @@ RSpec.describe Record, type: :model do
     end
   end
 
+  describe '#opened?' do
+    it 'is false by default' do
+      expect(record).not_to be_opened
+    end
+  end
+
+  describe '#closed?' do
+    it 'is true by default' do
+      expect(record).to be_closed
+    end
+  end
+
   # Class methods
   describe 'types related methods' do
     it 'types must return the available types' do

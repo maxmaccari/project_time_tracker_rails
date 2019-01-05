@@ -112,7 +112,67 @@ RSpec.describe RecordsController, type: :controller do
         expect(assigns(:record)).to eq(record)
       end
 
-      it 'redirects to the record' do
+      it 'redirects to the project' do
+        put :update,
+            params: {
+              project_id: project.id,
+              id: record.to_param,
+              record: valid_attributes
+            }
+
+        expect(response).to redirect_to(project)
+      end
+    end
+
+    context 'with opened record' do
+      let!(:record) { create(:time_record, initial_hour: 0, project: project) }
+
+      it 'closes the requested record' do
+        put :update,
+            params: {
+              project_id: project.id,
+              id: record.to_param,
+              close: true
+            }
+
+        record.reload
+
+        expect(record).to be_closed
+      end
+
+      it 'redirects to the project' do
+        put :update,
+            params: {
+              project_id: project.id,
+              id: record.to_param,
+              record: valid_attributes
+            }
+
+        expect(response).to redirect_to(project)
+      end
+    end
+
+    context 'with another day closing' do
+      let!(:record) do
+        create(:time_record, initial_hour: 23,
+                             initial_minute: 59,
+                             project: project)
+      end
+
+      it 'does not closes the requested record' do
+        put :update,
+            params: {
+              project_id: project.id,
+              id: record.to_param,
+              close: true
+            }
+
+        record.reload
+
+        expect(record).not_to be_closed
+      end
+
+      it 'redirects to the project' do
         put :update,
             params: {
               project_id: project.id,

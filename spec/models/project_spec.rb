@@ -172,4 +172,28 @@ RSpec.describe Project, type: :model do
       expect(project.estimated_value).to be_nil
     end
   end
+
+  describe '#opened_records?' do
+    subject(:project) { create(:project) }
+
+    it "returns false if there's not opened records" do
+      expect(project).not_to be_opened_records
+    end
+
+    it 'returns true if there is opened records' do
+      create(:time_record, project: project)
+
+      expect(project).to be_opened_records
+    end
+  end
+
+  describe '#opened_records' do
+    subject(:project) { create(:project) }
+
+    let(:opened_record) { create(:time_record, project: project) }
+
+    it 'returns the opened records' do
+      expect(project.opened_records).to include(opened_record)
+    end
+  end
 end
