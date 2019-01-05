@@ -1,24 +1,24 @@
-# README
+# Project Time Recorder Rails
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+My last personal rails project before I get my first job in Ruby on Rails.
+It was useful for me to track my freelancers projects time.
 
-Things you may want to cover:
+## Setup Instructions
 
-* Ruby version
+### Install the dependencies:
+`bundle install`
 
-* System dependencies
 
-* Configuration
+### Setup database
+`$ rails db:create`
 
-* Database creation
+`$ rails db:migrate`
 
-* Database initialization
+### Run the app
+`$ rails s`
 
-* How to run the test suite
+### Create an user
 
-* Services (job queues, cache servers, search engines, etc.)
+`$ rails c`
 
-* Deployment instructions
-
-* ...
+`irb> User.create email: 'jondoe@example.com', password: '$3cr3t'`
